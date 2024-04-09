@@ -1,0 +1,61 @@
+version: "3.7"
+
+services:
+  sesame-app-manager:
+    container_name: sesame-app-manager
+    image: ghcr.io/libertech-fr/sesame-app-manager:latest
+    restart: always
+    environment:
+      - SESAME_APP_API_URL=http://sesame-orchestrator:4000
+    expose:
+      - "3000"
+    networks:
+      - sesame
+
+  sesame-orchestrator:
+    container_name: sesame-orchestrator
+    image: ghcr.io/libertech-fr/sesame-orchestrator:latest
+    restart: always
+    environment:
+      - SESAME_REDIS_URI=redis://sesame-redis:6379
+      - SESAME_MONGO_URI=mongodb://sesame-mongo:27017/sesame
+      - SESAME_JWT_SECRET=your_jwt_secret
+    volumes:
+      - /config/sesame-orchestrator/jsonforms:/usr/src/app/src/management/identities/jsonforms/_config
+      - /config/sesame-orchestrator/validations:/usr/src/app/src/management/identities/validations/_config
+    networks:
+      - sesame
+
+  sesame-mongo:
+    image: mongo:7.0
+    container_name: sesame-mongo
+    command: --replSet rs0 --wiredTigerCacheSizeGB 1.5
+    environment:
+      - MONGODB_REPLICA_SET_MODE=primary
+      - MONGODB_REPLICA_SET_NAME=rs0
+    restart: always
+    networks:
+      - sesame
+    ports:
+      - "27017:27017"
+    volumes:
+      - sesame-mongo:/data/db
+
+  sesame-redis:
+    image: redis
+    container_name: sesame-redis
+    volumes:
+      - sesame-redis:/data
+    restart: always
+    networks:
+      - sesame
+    ports:
+      - "6379:6379"
+    command: redis-server --appendonly yes
+
+volumes:
+  sesame-mongo:
+  sesame-redis:
+
+networks:
+  sesame:
