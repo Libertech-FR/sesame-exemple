@@ -40,14 +40,14 @@ configs/
 │   ├── statics/
 │   │   ├── logo.png
 │   └── ...
-└── sesame-orchestrator/
+├── sesame-orchestrator/
 │   ├── jsonforms/
 │   │   ├── nom_object_class.ui.yml
 │   │   └── ...
 │   └── validations/
 │       ├── nom_object_class.yml
 │       └── ...
-└── sesame-taiga-crawler/
+├── sesame-taiga-crawler/
 │   ├── .env
 │   └── mappings.json
 ```
