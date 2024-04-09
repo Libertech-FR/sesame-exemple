@@ -3,16 +3,24 @@
 
 ## Sommaire
 
-1. [Prérequis](#1-prérequis)
-2. [Installation](#2-installation)
-3. [Configuration](#3-configuration)
-4. [Lancement](#4-lancement)
-5. [Configuration du daemon (sans Docker)](#5-configuration-du-daemon-sans-docker)
-6. [Utilisation](#6-utilisation)
-7. [Maintenance](#7-maintenance)
-8. [Aide et documentation](#8-aide-et-documentation)
-9. [Annexe](#9-annexe)
-10. [Conclusion](#10-conclusion)
+- [Guide de démarrage - Application de Synchronisation d'Identités](#guide-de-démarrage---application-de-synchronisation-didentités)
+  - [Sommaire](#sommaire)
+  - [1. Prérequis](#1-prérequis)
+  - [2. Installation](#2-installation)
+    - [Arborescence du projet](#arborescence-du-projet)
+    - [Configuration des environnements](#configuration-des-environnements)
+  - [3. Configuration](#3-configuration)
+    - [Dossiers de configuration](#dossiers-de-configuration)
+  - [4. Lancement](#4-lancement)
+    - [Démarrage des services](#démarrage-des-services)
+    - [Vérification](#vérification)
+  - [5. Configuration du daemon (sans Docker)](#5-configuration-du-daemon-sans-docker)
+    - [Installation du daemon](#installation-du-daemon)
+  - [6. Utilisation](#6-utilisation)
+    - [Accès à l'interface d'administration](#accès-à-linterface-dadministration)
+  - [8. Aide et documentation](#8-aide-et-documentation)
+  - [9. Annexe](#9-annexe)
+  - [10. Conclusion](#10-conclusion)
 
 ## 1. Prérequis
 
@@ -22,37 +30,45 @@
 
 ## 2. Installation
 
-### Cloner le dépôt
+### Arborescence du projet
 
-```bash
-git clone [URL_DU_REPO] sesame-project
-cd sesame-project
 ```
+docker-compose.yml
+Makefile
+configs/
+├── sesame-app-manager/
+│   ├── statics/
+│   │   ├── logo.png
+│   └── ...
+└── sesame-orchestrator/
+│   ├── jsonforms/
+│   │   ├── nom_object_class.ui.yml
+│   │   └── ...
+│   └── validations/
+│       ├── nom_object_class.yml
+│       └── ...
+└── sesame-taiga-crawler/
+│   ├── .env
+│   └── mappings.json
+```
+
+```bash    
+
+```
+
+
 
 ### Configuration des environnements
 
-- **sesame-orchestrator**:
-  ```bash
-  cp sesame-orchestrator/.env.example sesame-orchestrator/.env
-  # Modifier le .env pour ajouter les configurations spécifiques
-  ```
-- **sesame-app-manager**:
-  ```bash
-  cp sesame-app-manager/.env.example sesame-app-manager/.env
-  # Modifier le .env pour ajouter les configurations spécifiques
-  ```
-
-### Installation des dépendances
-
-```bash
-docker-compose build
-```
+//TODO
 
 ## 3. Configuration
 
 ### Dossiers de configuration
 
 Configurer les dossiers pour chaque service dans `configs/` en suivant les instructions spécifiques pour chaque module.
+
+//TODO
 
 ## 4. Lancement
 
@@ -72,27 +88,13 @@ docker-compose ps
 
 ### Installation du daemon
 
-```bash
-# Télécharger le paquet depuis GitHub en fonction de l'OS
-wget [URL_DU_PAQUET] -O sesame-deamon.pkg
-# Installer le paquet
-sudo installer -pkg sesame-deamon.pkg -target /
-```
+// TODO
 
 ## 6. Utilisation
 
 ### Accès à l'interface d'administration
 
 Accéder à l'interface d'administration de `sesame-app-manager` via l'URL configurée pour voir l'interface et commencer à gérer les identités.
-
-## 7. Maintenance
-
-### Mises à jour et imports
-
-```bash
-make update
-make import
-```
 
 ## 8. Aide et documentation
 
