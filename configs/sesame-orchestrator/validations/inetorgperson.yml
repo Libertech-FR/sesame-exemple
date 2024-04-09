@@ -1,0 +1,68 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "cn": {
+      "type": "string",
+      "description": "Common name of the inetOrgPerson."
+    },
+    "sn": {
+      "type": "string",
+      "description": "Surname of the inetOrgPerson."
+    },
+    "uid": {
+      "type": "string",
+      "description": "UID of the inetOrgPerson."
+    },
+    "displayName": {
+      "type": "string",
+      "description": "Display name of the inetOrgPerson."
+    },
+    "facsimileTelephoneNumber": {
+      "type": "string",
+      "description": "Facsimile telephone number of the inetOrgPerson."
+    },
+    "givenName": {
+      "type": "string",
+      "description": "Given name of the inetOrgPerson."
+    },
+    "labeledURI": {
+      "type": "string",
+      "description": "URI associated with the inetOrgPerson."
+    },
+    "mail": {
+      "type": "string",
+      "format": "email",
+      "description": "Email address of the inetOrgPerson."
+    },
+    "mobile": {
+      "type": "string",
+      "description": "Mobile number of the inetOrgPerson."
+    },
+    "postalAddress": {
+      "type": "string",
+      "description": "Postal address of the inetOrgPerson."
+    },
+    "preferredLanguage": {
+      "type": "string",
+      "description": "Preferred language of the inetOrgPerson."
+    },
+    "telephoneNumber": {
+      "type": "string",
+      "description": "Telephone number of the inetOrgPerson."
+    },
+    "title": {
+      "type": "string",
+      "description": "Title of the inetOrgPerson."
+    },
+    "userCertificate": {
+      "type": "string",
+      "description": "User certificate of the inetOrgPerson."
+    },
+    "userPassword": {
+      "type": "string",
+      "description": "User password of the inetOrgPerson."
+    }
+  },
+  "required": ["cn", "sn", "uid"]
+}

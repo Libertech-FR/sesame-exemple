@@ -1,0 +1,121 @@
+{
+  "type": "Group",
+  "label": "inetOrgPerson",
+  "elements": [
+    {
+      "type": "HorizontalLayout",
+      "elements": [
+        {
+          "type": "Control",
+          "label": "Common Name",
+          "scope": "#/properties/cn",
+          "options": {
+            "required": true
+          }
+        },
+        {
+          "type": "Control",
+          "label": "Surname",
+          "scope": "#/properties/sn",
+          "options": {
+            "required": true
+          }
+        },
+        {
+          "type": "Control",
+          "label": "UID",
+          "scope": "#/properties/uid",
+          "options": {
+            "required": true
+          }
+        }
+      ]
+    },
+    {
+      "type": "HorizontalLayout",
+      "elements": [
+        {
+          "type": "Control",
+          "label": "Display Name",
+          "scope": "#/properties/displayName"
+        },
+        {
+          "type": "Control",
+          "label": "Facsimile Telephone Number",
+          "scope": "#/properties/facsimileTelephoneNumber"
+        },
+        {
+          "type": "Control",
+          "label": "Given Name",
+          "scope": "#/properties/givenName"
+        }
+      ]
+    },
+    {
+      "type": "HorizontalLayout",
+      "elements": [
+        {
+          "type": "Control",
+          "label": "Email",
+          "scope": "#/properties/mail",
+          "options": {
+            "format": "email"
+          }
+        },
+        {
+          "type": "Control",
+          "label": "Mobile",
+          "scope": "#/properties/mobile"
+        },
+        {
+          "type": "Control",
+          "label": "Postal Address",
+          "scope": "#/properties/postalAddress"
+        }
+      ]
+    },
+    {
+      "type": "HorizontalLayout",
+      "elements": [
+        {
+          "type": "Control",
+          "label": "Preferred Language",
+          "scope": "#/properties/preferredLanguage"
+        },
+        {
+          "type": "Control",
+          "label": "Telephone Number",
+          "scope": "#/properties/telephoneNumber"
+        },
+        {
+          "type": "Control",
+          "label": "Title",
+          "scope": "#/properties/title"
+        }
+      ]
+    },
+    {
+      "type": "HorizontalLayout",
+      "elements": [
+        {
+          "type": "Control",
+          "label": "User Certificate",
+          "scope": "#/properties/userCertificate"
+        },
+        {
+          "type": "Control",
+          "label": "User Password",
+          "scope": "#/properties/userPassword",
+          "options": {
+            "type": "password"
+          }
+        },
+        {
+          "type": "Control",
+          "label": "Labeled URI",
+          "scope": "#/properties/labeledURI"
+        }
+      ]
+    }
+  ]
+}
