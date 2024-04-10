@@ -31,7 +31,6 @@
 ## 1. Prérequis
 
 - Docker
-- Git
 - Make
 
 ## 2. Installation
