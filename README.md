@@ -14,8 +14,8 @@
     - [Sesame Taiga Crawler](#sesame-taiga-crawler)
       - [.env](#env)
       - [mappings.json](#mappingsjson)
-      - [Partie mapping](#partie-mapping)
-      - [Partie additionalFields](#partie-additionalfields)
+        - [Partie mapping](#partie-mapping)
+        - [Partie additionalFields](#partie-additionalfields)
     - [Sesame Orchestrator](#sesame-orchestrator)
       - [validations](#validations)
       - [jsonforms](#jsonforms)
@@ -140,7 +140,7 @@ configs/
   }
   ```
 
-#### Partie mapping
+##### Partie mapping
   Les champs de mapping sont les champs de l'objet à importer. Les clés sont les champs de l'objet à importer et les valeurs sont les champs de l'objet source. Les champs de l'objet source sont des expressions régulières qui permettent de récupérer les données de l'objet source. Les champs de l'objet à importer sont des expressions régulières qui permettent de formater les données récupérées de l'objet source.
 
 Dans notre cas, il faudra structurer ces deux parties comme il suit :
@@ -161,7 +161,7 @@ Dans notre cas, il faudra structurer ces deux parties comme il suit :
 
 ```
 
-#### Partie additionalFields
+##### Partie additionalFields
 Les champs additionnels sont des champs qui ne sont pas présents dans l'objet source mais qui sont nécessaires pour l'import de l'objet. Les clés sont les champs de l'objet à importer et les valeurs sont des valeurs qui serront attribué a la clé.
 
 Certains champs sont requis pour la creation d'un objet dans la base de données, il faudra donc les ajouter dans le fichier de configuration. Les champs requies sont les suivants :
