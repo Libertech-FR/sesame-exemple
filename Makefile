@@ -10,9 +10,6 @@ sesame-run: ## Run the Sesame server
 sesame-stop: ## Stop the Sesame server
 	@docker compose down
 
-sesame-build: ## Build the Sesame server
-	@docker compose build
-
 sesame-update: ## Update the Sesame server
 	@docker compose pull
 	@docker compose up -d
@@ -20,3 +17,7 @@ sesame-update: ## Update the Sesame server
 sesame-import-taiga: ## Import Taiga data
 	@docker run ghcr.io/libertech-fr/sesame-taiga_crawler:latest \
 		-v $(PWD)/configs:/app/configs
+		--network sesame
+
+sesame-generate-jwt-secret: ## Generate a JWT token
+	@docker run --rm mihaigalos/randompass --length 32

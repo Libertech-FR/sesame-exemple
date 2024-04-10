@@ -8,19 +8,25 @@
   - [1. Prérequis](#1-prérequis)
   - [2. Installation](#2-installation)
     - [Arborescence du projet](#arborescence-du-projet)
-    - [Configuration des environnements](#configuration-des-environnements)
   - [3. Configuration](#3-configuration)
-    - [Dossiers de configuration](#dossiers-de-configuration)
+    - [Sesame App Manager](#sesame-app-manager)
+      - [Statics](#statics)
+    - [Sesame Taiga Crawler](#sesame-taiga-crawler)
+      - [.env](#env)
+      - [mappings.json](#mappingsjson)
+      - [Partie mapping](#partie-mapping)
+      - [Partie additionalFields](#partie-additionalfields)
+    - [Sesame Orchestrator](#sesame-orchestrator)
+      - [validations](#validations)
+      - [jsonforms](#jsonforms)
   - [4. Lancement](#4-lancement)
-    - [Démarrage des services](#démarrage-des-services)
+    - [Installation](#installation)
     - [Vérification](#vérification)
   - [5. Configuration du daemon (sans Docker)](#5-configuration-du-daemon-sans-docker)
     - [Installation du daemon](#installation-du-daemon)
   - [6. Utilisation](#6-utilisation)
     - [Accès à l'interface d'administration](#accès-à-linterface-dadministration)
-  - [8. Aide et documentation](#8-aide-et-documentation)
-  - [9. Annexe](#9-annexe)
-  - [10. Conclusion](#10-conclusion)
+  - [7. Aide et documentation](#7-aide-et-documentation)
 
 ## 1. Prérequis
 
@@ -31,6 +37,9 @@
 ## 2. Installation
 
 ### Arborescence du projet
+Pour utiliser Sesame, il est nécessaire de structurer l'arborescence comme il suit et de configurer les services nécessaires.
+
+Des exemples des fichiers sont disponibles dans le repository [sesame-exemple](https://github.com/Libertech-FR/sesame-exemple)
 
 ```
 docker-compose.yml
@@ -52,30 +61,204 @@ configs/
 │   └── mappings.json
 ```
 
-```bash    
+- `docker-compose.yml` : Fichier de configuration Docker Compose pour lancer les services.
+- `Makefile` : Fichier de configuration Make pour lancer les commandes de gestion des services et l'import des identitées depuis taiga.
+- `configs/` : Dossier de configuration pour chaque service.
+  - `sesame-app-manager/` : Configuration de l'application de gestion des identités.
+    - `statics/` : Dossier contenant les fichiers statiques (images, etc.).
+  - `sesame-orchestrator/` : Configuration de l'orchestrateur.
+    - `jsonforms/` : Dossier contenant les formulaires JSON pour les objets.
+    - `validations/` : Dossier contenant les fichiers de validation des objets.
+  - `sesame-taiga-crawler/` : Configuration du crawler Taiga.
+    - `.env` : Fichier de configuration des variables d'environnement.
+    - `mappings.json` : Fichier de configuration des mappings des objets pour l'import de Taiga vers Sesame.
 
-```
-
-
-
-### Configuration des environnements
-
-//TODO
 
 ## 3. Configuration
 
-### Dossiers de configuration
+### Sesame App Manager
 
-Configurer les dossiers pour chaque service dans `configs/` en suivant les instructions spécifiques pour chaque module.
+  Exemple de dossier : [ici](https://github.com/Libertech-FR/sesame-exemple/tree/main/configs/sesame-app-manager)
+  #### Statics
+  Exemple de dossier : [ici](https://github.com/Libertech-FR/sesame-exemple/tree/main/configs/sesame-app-manager/statics)
+  - Ajouter les fichiers statiques (images, etc.) dans le dossier `configs/sesame-app-manager/statics/`.
+  
+      | Titre    | Description |
+      | -------- | ------- |
+      | logo.png  | Logo de l'organisation. |
+      | login.png | Image de fond de la page de connexion. |
 
-//TODO
+### Sesame Taiga Crawler
+  Exemple de dossier : [ici](https://github.com/Libertech-FR/sesame-exemple/tree/main/configs/sesame-taiga-crawler)
+
+  #### .env
+  [Exemple de .env](https://github.com/Libertech-FR/sesame-exemple/blob/main/configs/sesame-taiga-crawler/.env)
+
+  - Configurer les variables d'environnement dans le fichier `configs/sesame-taiga-crawler/.env`.
+  
+    | Variable | Description |
+    | -------- | ------- |
+    | STC_API_BASEURL | URL de l'API Taiga. |
+    | STC_API_USERNAME | Nom d'utilisateur de l'API Taiga. |
+    | STC_API_PASSWORD | Mot de passe de l'API Taiga. |
+    | STC_API_FORWARD_PORT | Port de redirection pour l'API Taiga. |
+    | STC_API_PASSENSA | Mot de passe de l'ENSA. |
+    | SESAME_API_BASEURL | URL de l'API Sesame Orchestrator. |
+
+  #### mappings.json
+  [Exemple de mappings.json](https://github.com/Libertech-FR/sesame-exemple/blob/main/configs/sesame-taiga-crawler/mapping.json)
+  - Configurer les mappings des objets pour l'import de Taiga vers Sesame dans le fichier `configs/sesame-taiga-crawler/mappings.json`. L'application utilise la librairie python [DataWeaver](https://github.com/RICHARD-Quentin/DataWeaver/blob/main/README.md#configuration) dont voici un extrait de la documentation pour la configuration des mappings :
+  
+  Dans le cas de taiga, le script va consommer l'API de taiga et récupérer les données des identités. Il les stockera ensuite dans différents fichier JSON selon leur affecation: taiga_etd.json, taiga_ens.json, taiga_adm.json. Ces fichiers seront ensuite utilisés par l'orchestrateur pour les importer dans la base de données. Il faudra structurer le fichier de la manière suivante :
+  
+  ```json
+  /// mapping.json
+  {
+    "taiga_etd.json": {
+      "mapping": {
+        ...
+      },
+      "additionalFields": {
+        ...
+      }
+    },
+    "taiga_ens.json": {
+      "mapping": {
+        ...
+      },
+      "additionalFields": {
+        ...
+      }
+    },
+    "taiga_adm.json": {
+      "mapping": {
+        ...
+      },
+      "additionalFields": {
+        ...
+      }
+    }
+  }
+  ```
+
+#### Partie mapping
+  Les champs de mapping sont les champs de l'objet à importer. Les clés sont les champs de l'objet à importer et les valeurs sont les champs de l'objet source. Les champs de l'objet source sont des expressions régulières qui permettent de récupérer les données de l'objet source. Les champs de l'objet à importer sont des expressions régulières qui permettent de formater les données récupérées de l'objet source.
+
+Dans notre cas, il faudra structurer ces deux parties comme il suit :
+- Pour les champs inetOrgPerson, la clé devra etre le nom de la valeur venant de taiga que l'on veut maper et sa valeur devra commencer par inetOrgPerson puis le nom du champ que l'on veut mapper inetOrgPerson.nom_du_champ_sesame ,  par exemple : 
+
+```json
+"mapping": {
+  "nom": "inetOrgPerson.cn",
+}
+```
+
+- Pour tout les autres champs qui dependent de schema additionels, de la même manière il faudra que la clé soit le nom de la valeur venant de taiga que l'on veut maper et sa valeur devra commencer par le nom du schema puis le nom du champ que l'on veut mapper additionalFields.attributes.nom_du_schema.nom_du_champ_sesame ,  par exemple : 
+
+```json
+"mapping": {
+  "nom": "additionalFields.attributes.supann.nom",
+}
+
+```
+
+#### Partie additionalFields
+Les champs additionnels sont des champs qui ne sont pas présents dans l'objet source mais qui sont nécessaires pour l'import de l'objet. Les clés sont les champs de l'objet à importer et les valeurs sont des valeurs qui serront attribué a la clé.
+
+Certains champs sont requis pour la creation d'un objet dans la base de données, il faudra donc les ajouter dans le fichier de configuration. Les champs requies sont les suivants :
+  - `additionalFields.objectClasses` : un tableau avec la liste des champs additionel que l'on veut ajouter a notre identité, par exemple :
+  ```json 
+  "additionalFields": {
+    "additionalFields.objectClasses": ["supann"]
+  }
+  
+  ```
+  - `additionalFields.state` : le status de l'identité, -1 pour une creation/update par exemple :
+  ```json
+  "additionalFields": {
+    "state": -1
+  }
+  ```
+
+  Dans cette partie nous pouvons aussi ajouter des champs additionels qui ne sont pas present dans l'objet source, par exemple : 
+  ```json
+  "additionalFields": {
+    "additionalFields.attributes.supann.supannTypeEntiteAffectation": "etd",
+  }
+  ```
+  ### Sesame Orchestrator
+  Exemple de dossier : [ici](https://github.com/Libertech-FR/sesame-exemple/tree/main/configs/sesame-orchestrator)
+
+  #### validations
+  [Exemple de validations](https://github.com/Libertech-FR/sesame-exemple/tree/main/configs/sesame-orchestrator/validations)
+
+  [Exemple de fichier de validation](https://github.com/Libertech-FR/sesame-exemple/blob/main/configs/sesame-orchestrator/validations/supann.yml)
+
+  Ajouter les fichiers de validation des objets dans le dossier `configs/sesame-orchestrator/validations/`.
+
+  Créer un fichier de validation pour chaque objet à importer. Les fichiers de validation sont des fichiers YAML qui définissent les règles de validation des objets. Les fichiers de validation sont utilisés par l'orchestrateur pour valider les objets avant de les importer dans la base de données et pour valider des modifications dans l'interface.
+
+  Bien nommer les fichiers de validation pour qu'ils correspondent aux noms des objets à importer. Par exemple, pour un objet `Person`, nommer le fichier `person.yml`
+
+  Pour plus de details sur le fichier merci de suivre cette documentation : [Validation d'identité](https://libertech-fr.github.io/sesame-orchestrator/additional-documentation/documentation-utilisateur/validation-des-schemas-compl%C3%A9mentaires-de-l'identit%C3%A9.html)
+
+  #### jsonforms
+
+  [Exemple de jsonforms](https://github.com/Libertech-FR/sesame-exemple/tree/main/configs/sesame-orchestrator/jsonforms)
+
+  [Exemple de fichier de formulaire](https://github.com/Libertech-FR/sesame-exemple/blob/main/configs/sesame-orchestrator/jsonforms/supann.ui.yml)
+  
+  Ajouter les formulaires JSON pour les objets dans le dossier `configs/sesame-orchestrator/jsonforms/`. Ces formulaires serront utilisé par la librairie [jsonforms](https://jsonforms.io/docs/uischema) pour générer les formulaires de création et de modification des objets dans l'interface.
+
+  Ici deux solutions, soit vous devez créer un fichier pour chaque objet que vous voulez importer, avec la convention suivante : `nom_object_class.ui.yml`. Par exemple, pour un objet `Person`, nommer le fichier `person.ui.yml`.
+
+  Soit vous pouvez utiliser la commande `make generate-jsonforms` pour générer automatiquement les formulaires pour tous les objets à partir des fichiers de validation. Pour cela, il faut que les fichiers de validation soient déjà présents dans le dossier `configs/sesame-orchestrator/validations/`.
 
 ## 4. Lancement
 
-### Démarrage des services
+Pour toute les operations de lancement, de mise a jours ou de build, il est necessaire d'utiliser le fichier `docker-compose.yml`. Certaines commandes sont aussi disponible dans le fichier `Makefile` pour simplifier les operations.
+
+### Installation
+Copier le fichier `docker-compose.yml` de ce repository [disponible ici](https://github.com/Libertech-FR/sesame-exemple/blob/main/docker-compose.yml)  à la racine du projet et faculativement le fichier `Makefile` [disponible ici](https://github.com/Libertech-FR/sesame-exemple/blob/main/Makefile) à la racine du projet.
+
+Si vous utilisez le fichier `Makefile`, vous pouvez lancer les commandes suivantes :
+  
+  ```bash
+  make sesame-generate-jwt-secret
+  ```
+Sinon lancer la commande 
+  ```bash
+  docker run --rm mihaigalos/randompass --length 32
+  ```
+Et copier le resultat.
+
+Dans le `docker-compose.yml`, dans le service `sesame-orchestrator`, dans la partie `environment`, modifier la variable SESAME_JWT_SECRET avec le resultat de la commande précédente.
+
+Pour lancer les services la première fois et par la suite pour mettre a jours, exécuter la commande suivante :
 
 ```bash
+docker-compose pull
 docker-compose up -d
+```
+
+Ou avec le `Makefile` :
+
+```bash
+make sesame-update
+```
+
+Pour lancer l'import des identités depuis Taiga, exécuter la commande suivante :
+
+```bash
+docker run ghcr.io/libertech-fr/sesame-taiga_crawler:latest \
+  -v $(PWD)/configs/sesame-taiga-crawler:/app/configs
+  --network sesame
+```
+
+Ou avec le `Makefile` :
+
+```bash
+make sesame-import-taiga
 ```
 
 ### Vérification
@@ -96,14 +279,9 @@ docker-compose ps
 
 Accéder à l'interface d'administration de `sesame-app-manager` via l'URL configurée pour voir l'interface et commencer à gérer les identités.
 
-## 8. Aide et documentation
+## 7. Aide et documentation
 
-Fournir des liens vers la documentation technique détaillée, des FAQs et des ressources d'aide en cas de problèmes.
-
-## 9. Annexe
-
-Inclure des annexes pour les configurations spécifiques, les scripts d'import ou les commandes de débogage.
-
-## 10. Conclusion
-
-Ce guide doit être accompagné d'un README détaillé, fournissant un aperçu rapide du projet, des liens vers la documentation complète, et les contacts pour le support technique.
+- [Documentation technique](https://libertech-fr.github.io/sesame-orchestrator/additional-documentation/documentation-technique.html)
+- [Documentation utilisateur](https://libertech-fr.github.io/sesame-orchestrator/additional-documentation/documentation-utilisateur.html)
+- [DataWeaver](https://github.com/RICHARD-Quentin/DataWeaver/blob/main/README.md)
+- [JSONForms](https://jsonforms.io/docs/uischema)

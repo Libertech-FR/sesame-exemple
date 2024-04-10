@@ -23,6 +23,8 @@ services:
     volumes:
       - /config/sesame-orchestrator/jsonforms:/usr/src/app/src/management/identities/jsonforms/_config
       - /config/sesame-orchestrator/validations:/usr/src/app/src/management/identities/validations/_config
+    expose:
+      - "4000"
     networks:
       - sesame
 
