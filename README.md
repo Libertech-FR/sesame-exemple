@@ -35,6 +35,14 @@
 
 ## 2. Installation
 
+### Téléchargement du repo
+
+```bash
+mkdir /data
+cd /data
+curl -L https://api.github.com/repos/Libertech-FR/sesame-exemple/tarball/main | tar -xz
+```
+
 ### Arborescence du projet
 Pour utiliser Sesame, il est nécessaire de structurer l'arborescence comme il suit et de configurer les services nécessaires.
 
