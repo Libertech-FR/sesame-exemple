@@ -246,8 +246,8 @@ Dans le `docker-compose.yml`, dans le service `sesame-orchestrator`, dans la par
 Pour lancer les services la première fois et par la suite pour mettre a jours, exécuter la commande suivante :
 
 ```bash
-docker-compose pull
-docker-compose up -d
+docker compose pull
+docker compose up -d
 ```
 
 Ou avec le `Makefile` :
@@ -273,7 +273,7 @@ make sesame-import-taiga
 ### Vérification
 
 ```bash
-docker-compose ps
+docker compose ps
 ```
 
 ## 5. Configuration du daemon (sans Docker)
