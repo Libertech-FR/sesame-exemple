@@ -5,6 +5,8 @@ services:
     container_name: sesame-app-manager
     image: ghcr.io/libertech-fr/sesame-app-manager:latest
     restart: always
+    depends_on:
+      - sesame-orchestrator
     environment:
       - SESAME_APP_API_URL=http://sesame-orchestrator:4000
     expose:
@@ -16,6 +18,9 @@ services:
     container_name: sesame-orchestrator
     image: ghcr.io/libertech-fr/sesame-orchestrator:latest
     restart: always
+    depends_on:
+      - sesame-mongo
+      - sesame-redis
     environment:
       - SESAME_REDIS_URI=redis://sesame-redis:6379
       - SESAME_MONGO_URI=mongodb://sesame-mongo:27017/sesame
