@@ -15,9 +15,10 @@ sesame-update: ## Update the Sesame server
 	@docker compose up -d
 
 sesame-import-taiga: ## Import Taiga data
-	@docker run ghcr.io/libertech-fr/sesame-taiga_crawler:latest \
-		-v $(PWD)/configs:/app/configs
-		--network sesame
+        @docker run --rm -it \
+          -v $(CURDIR)/configs:/app/configs \
+          --network sesame \
+          ghcr.io/libertech-fr/sesame-taiga_crawler:latest
 
 sesame-generate-jwt-secret: ## Generate a JWT token
 	@docker run --rm mihaigalos/randompass --length 32
