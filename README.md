@@ -32,22 +32,28 @@
 
 - Docker [Installation](https://docs.docker.com/engine/install/)
 - Make
-```bash
-// Pour Debian/Ubuntu
+- 
+Installtion de make :
+- Pour Debian/Ubuntu :
+```
 apt install make
-
-//Pour Alpine
+```
+- Pour Alpine
+```
 apk add make
-
-//Pour MacOs
-brew install make
-
-//Pour windows
-choco install make ou installer directer les fichier [ici](https://gnuwin32.sourceforge.net/packages/make.htm)
- 
-  
 ```
 
+- Pour MacOs
+```
+brew install make
+```
+
+- Pour windows
+```
+choco install make
+```
+
+Ou installer directement les fichier [ici](https://gnuwin32.sourceforge.net/packages/make.htm)
 ## 2. Installation
 
 ### Téléchargement du repo
