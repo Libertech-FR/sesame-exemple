@@ -31,9 +31,10 @@
 ## 1. Prérequis
 
 - Docker [Installation](https://docs.docker.com/engine/install/)
+- Avoir une machine avec un processeur qui supporte l'AVX
 - Make
-- 
-Installtion de make :
+
+Installation de make :
 - Pour Debian/Ubuntu :
 ```
 apt install make
