@@ -30,8 +30,23 @@
 
 ## 1. Prérequis
 
-- Docker
+- Docker [Installation](https://docs.docker.com/engine/install/)
 - Make
+```bash
+// Pour Debian/Ubuntu
+apt install make
+
+//Pour Alpine
+apk add make
+
+//Pour MacOs
+brew install make
+
+//Pour windows
+choco install make ou installer directer les fichier [ici](https://gnuwin32.sourceforge.net/packages/make.htm)
+ 
+  
+```
 
 ## 2. Installation
 
