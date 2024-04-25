@@ -22,3 +22,15 @@ sesame-import-taiga: ## Import Taiga data
 
 sesame-generate-jwt-secret: ## Generate a JWT token
 	@docker run --rm mihaigalos/randompass --length 32
+
+sesame-create-agent: ## Create new agent in Sesame ochestrator
+        @docker exec -it sesame-orchestrator \
+          yarn console agents create
+
+sesame-create-keyring: ## Create new keyring token for Sesame ochestrator API
+        @docker exec -it sesame-orchestrator \
+          yarn console keyrings create
+
+sesame-backends-syncall: ## Sync all identities from TO_SYNC status
+        @docker exec -it sesame-orchestrator \
+          yarn console backends syncall

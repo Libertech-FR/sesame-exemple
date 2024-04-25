@@ -286,6 +286,12 @@ Ou avec le `Makefile` :
 make sesame-update
 ```
 
+Création du compte admin et d'un jeton d'authentification pour un script d'import
+```bash
+make sesame-create-agent
+make sesame-create-keyring
+```
+
 Pour lancer l'import des identités depuis Taiga, exécuter la commande suivante :
 
 ```bash
