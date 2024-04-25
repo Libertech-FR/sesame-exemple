@@ -8,12 +8,21 @@ services:
     depends_on:
       - sesame-orchestrator
     environment:
-      - SESAME_APP_API_URL=http://sesame-orchestrator:4000
+      - SESAME_APP_API_URL=<public_url_orchestrator>
+    volumes:
+      - ./configs/sesame-app-manager/statics:/data/src/public/config
     expose:
       - "3000"
     networks:
       - sesame
-
+      - reverse
+    labels:
+      - "traefik.enable=true"
+      #Décommenter la ligne suivante pour rediriger en HTTPS
+#      - "traefik.http.routers.sesame-app-manager.tls=true"
+      - "traefik.http.routers.sesame-app-manager.rule=Host(`<public_url_app_manager>`)"
+      - "traefik.http.services.sesame-app-manager.loadbalancer.server.port=3000"
+      
   sesame-orchestrator:
     container_name: sesame-orchestrator
     image: ghcr.io/libertech-fr/sesame-orchestrator:latest
@@ -24,14 +33,34 @@ services:
     environment:
       - SESAME_REDIS_URI=redis://sesame-redis:6379
       - SESAME_MONGO_URI=mongodb://sesame-mongo:27017/sesame
-      - SESAME_JWT_SECRET=your_jwt_secret
+      - SESAME_JWT_SECRET=<your_jwt_secret>
     volumes:
-      - /config/sesame-orchestrator/jsonforms:/usr/src/app/src/management/identities/jsonforms/_config
-      - /config/sesame-orchestrator/validations:/usr/src/app/src/management/identities/validations/_config
+      - ./configs/sesame-orchestrator/jsonforms:/data/configs/identities/jsonforms
+      - ./configs/sesame-orchestrator/validations:/data/configs/identities/validations
     expose:
       - "4000"
     networks:
       - sesame
+      - reverse
+    labels:
+      - "traefik.enable=true"
+      #Décommenter la ligne suivante pour rediriger en HTTPS
+#     - "traefik.http.routers.sesame-orchestrator.tls=true"
+      - "traefik.http.routers.sesame-orchestrator.rule=Host(`<public_url_orchestrator>`)"
+      - "traefik.http.services.sesame-orchestrator.loadbalancer.server.port=4000"
+
+  sesame-daemon:
+    container_name: sesame-daemon
+    image: ghcr.io/libertech-fr/sesame-daemon:latest
+    restart: always
+    depends_on:
+      - sesame-redis
+    environment:
+      - SESAME_REDIS_URI=redis://sesame-redis:6379
+    networks:
+      - sesame
+    volumes:
+      - ./configs/sesame-daemon/backends:/data/backends
 
   sesame-mongo:
     image: mongo:7.0
@@ -66,3 +95,5 @@ volumes:
 
 networks:
   sesame:
+  reverse:
+    external: true
