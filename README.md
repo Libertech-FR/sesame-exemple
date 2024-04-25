@@ -60,9 +60,17 @@ Ou installer directement les fichier [ici](https://gnuwin32.sourceforge.net/pack
 ### Téléchargement du repo
 
 ```bash
-mkdir /data
-cd /data
-curl -L https://api.github.com/repos/Libertech-FR/sesame-exemple/tarball/main | tar -xz
+$ mkdir /data
+$ cd /data
+$ curl -L https://api.github.com/repos/Libertech-FR/sesame-exemple/tarball/main | tar -xz
+```
+
+### Vérification des prérequis et création du network
+```bash
+$ docker ps
+# la commande doit foncitonner et par défaut si aucun conteneur n'à été lancer, retourner du vide
+
+$ docker network create reverse
 ```
 
 ### Arborescence du projet

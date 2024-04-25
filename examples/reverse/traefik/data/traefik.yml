@@ -1,0 +1,65 @@
+# traefik/providers/traefik.yml
+
+api:
+  insecure: true
+  dashboard: true
+
+providers:
+  docker:
+    exposedByDefault: false
+    network: reverse
+  file:
+    directory: /providers/
+    watch: true
+
+entryPoints:
+  http:
+    address: ':80'
+  https:
+    address: ':443'
+  metrics:
+    address: ":8000"
+#  api:
+#    address: ':8080'
+
+log:
+  filePath: /var/log/traefik/traefik.log
+  level: ERROR
+  # level: DEBUG
+accessLog:
+  filePath: /var/log/traefik/access.log
+  bufferingSize: 2
+
+certificatesResolvers:
+  ovh:
+    acme:
+      email: noreply@libertech.fr
+      storage: /etc/traefik/acme.json
+      dnsChallenge:
+        provider: ovh
+        delayBeforeCheck: 10
+
+tls:
+  options:
+    hardening:
+      minVersion: "VersionTLS12"
+      sniStrict: true
+      cipherSuites:
+      - "TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256"
+      - "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256"
+      - "TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384"
+      - "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256"
+      - "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384"
+      - "TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305"
+      - "TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305"
+
+metrics:
+  prometheus:
+    entryPoint: metrics
+    buckets:
+      - 0.1
+      - 0.3
+      - 1.2
+      - 5.0
+    addEntryPointsLabels: true
+    addServicesLabels: true

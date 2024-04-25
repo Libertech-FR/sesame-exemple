@@ -1,0 +1,34 @@
+# traefik/middlewares.yml
+
+http:
+  middlewares:
+    SecuredChain:
+      chain:
+        middlewares:
+        - HTTPS-only
+        - Security-Headers
+        # - RateLimit
+    Security-Headers:
+      headers:
+        contentTypeNosniff: true
+        browserXssFilter: true
+        forceSTSHeader: true
+        STSSeconds: 315360000
+        STSIncludeSubdomains: true
+        STSPreload: true
+        AccessControlMaxAge: 100
+    HTTPS-only:
+      redirectScheme:
+        scheme: https
+        permanent: false
+    WhitelistAdmin:
+      ipWhiteList:
+        sourceRange:
+        - "127.0.0.1/32" # LOCAL
+    RateLimit:
+      rateLimit:
+        average: 50
+        burst: 25
+    AuthUsers:
+      basicAuth:
+        users:
