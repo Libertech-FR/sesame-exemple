@@ -307,8 +307,6 @@ docker exec -it sesame-orchestrator \
 
 #### Creation d'un jeton d'authentification pour un script d'import
 
-Pour lancer l'import des identités depuis Taiga, exécuter la commande suivante :
-
 ```bash
 make sesame-create-keyring
 ```
@@ -319,6 +317,9 @@ ou
 docker exec -it sesame-orchestrator \
   yarn console keyrings create
 ```
+
+Pour lancer l'import des identités depuis Taiga, exécuter la commande suivante :
+
 
 ```bash
 docker run ghcr.io/libertech-fr/sesame-taiga_crawler:latest \
