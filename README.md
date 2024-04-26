@@ -170,6 +170,9 @@ configs/
     | STC_API_FORWARD_PORT | Port de redirection pour l'API Taiga. |
     | STC_API_PASSENSA | Mot de passe de l'ENSA. |
     | SESAME_API_BASEURL | URL de l'API Sesame Orchestrator. |
+    | SESAME_IMPORT_PARALLELS_FILES | Nombre de fichiers d'identitées a syncroniser au maximum en parallele |
+    | SESAME_IMPORT_PARALLELS_ENTRIES | Nombre d'entrée dans un fichier d'identitée a syncroniser au maximum en parallele |
+    | SESAME_API_TOKEN | Token d'authentification crée a [cette étape](https://github.com/Libertech-FR/sesame-exemple/tree/main?tab=readme-ov-file#creation-dun-jeton-dauthentification-pour-un-script-dimport)  |
 
   #### mappings.json
   [Exemple de mappings.json](https://github.com/Libertech-FR/sesame-exemple/blob/main/configs/sesame-taiga-crawler/mapping.json)
@@ -318,7 +321,7 @@ docker exec -it sesame-orchestrator \
   yarn console keyrings create
 ```
 
-Pour lancer l'import des identités depuis Taiga, exécuter la commande suivante :
+Pour lancer l'import des identités depuis Taiga, s'assurer d'avoir bien remplis le ``.env`` et le fichier ``mappings.json`` dans `./configs/sesame-taiga-crawler/.env` comme décris [ici](https://github.com/Libertech-FR/sesame-exemple/tree/main?tab=readme-ov-file#sesame-taiga-crawler-optionnel)  et ajusté  exécuter la commande suivante :
 
 
 ```bash
