@@ -291,13 +291,34 @@ Ou avec le `Makefile` :
 make sesame-update
 ```
 
-Création du compte admin et d'un jeton d'authentification pour un script d'import
+#### Création du compte admin 
+
 ```bash
 make sesame-create-agent
+```
+
+ou
+
+```bash
+docker exec -it sesame-orchestrator \
+  yarn console agents create
+```
+
+
+#### Creation d'un jeton d'authentification pour un script d'import
+
+Pour lancer l'import des identités depuis Taiga, exécuter la commande suivante :
+
+```bash
 make sesame-create-keyring
 ```
 
-Pour lancer l'import des identités depuis Taiga, exécuter la commande suivante :
+ou
+
+```bash
+docker exec -it sesame-orchestrator \
+  yarn console keyrings create
+```
 
 ```bash
 docker run ghcr.io/libertech-fr/sesame-taiga_crawler:latest \
