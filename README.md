@@ -125,7 +125,7 @@ configs/
       | logo.png  | Logo de l'organisation. |
       | login.png | Image de fond de la page de connexion. |
 
-### Sesame Taiga Crawler
+### Sesame Taiga Crawler (optionnel)
   Exemple de dossier : [ici](https://github.com/Libertech-FR/sesame-exemple/tree/main/configs/sesame-taiga-crawler)
 
   #### .env
@@ -225,7 +225,7 @@ Certains champs sont requis pour la creation d'un objet dans la base de données
   ```
 
   Pour toute operation sur les champs, il est possible d'ajouter une fonction de transformation descrite dans la documentation de [DataWeaver Transformations](https://github.com/RICHARD-Quentin/DataWeaver/blob/main/README.md#configuration-file-transforms)
-  ### Sesame Orchestrator
+### Sesame Orchestrator
   Exemple de dossier : [ici](https://github.com/Libertech-FR/sesame-exemple/tree/main/configs/sesame-orchestrator)
 
   #### validations
