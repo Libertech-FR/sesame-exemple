@@ -321,7 +321,7 @@ docker exec -it sesame-orchestrator \
   yarn console keyrings create
 ```
 
-Pour lancer l'import des identités depuis Taiga, s'assurer d'avoir bien remplis le ``.env`` et le fichier ``mappings.json`` dans `./configs/sesame-taiga-crawler/.env` comme décris [ici](https://github.com/Libertech-FR/sesame-exemple/tree/main?tab=readme-ov-file#sesame-taiga-crawler-optionnel)  et ajusté  exécuter la commande suivante :
+Pour lancer l'import des identités depuis Taiga, s'assurer d'avoir bien remplis le ``.env`` et le fichier ``mappings.json`` dans `/configs/sesame-taiga-crawler/` comme décris [ici](https://github.com/Libertech-FR/sesame-exemple/tree/main?tab=readme-ov-file#sesame-taiga-crawler-optionnel)  et ajusté  exécuter la commande suivante :
 
 
 ```bash
