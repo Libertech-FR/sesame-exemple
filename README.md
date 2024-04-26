@@ -70,6 +70,7 @@ $ curl -L https://api.github.com/repos/Libertech-FR/sesame-exemple/tarball/main 
 $ docker ps
 # la commande doit foncitonner et par défaut si aucun conteneur n'à été lancer, retourner du vide
 
+$ docker network create sesame
 $ docker network create reverse
 ```
 
