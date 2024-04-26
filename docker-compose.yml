@@ -88,5 +88,6 @@ volumes:
 
 networks:
   sesame:
+    external: true
   reverse:
     external: true
