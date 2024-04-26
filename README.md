@@ -274,6 +274,10 @@ Et copier le resultat.
 
 Dans le `docker-compose.yml`, dans le service `sesame-orchestrator`, dans la partie `environment`, modifier la variable SESAME_JWT_SECRET avec le resultat de la commande précédente.
 
+Modifier egalement dans le docker compose les variables suivantes : 
+- `<public_url_orchestrator>`: remplacer par ip_de_votre_machine:4000 ou le nom de domaine associé a la machine dans la partie `sesame-orchestrator.environment` et `sesame-app-manager.labels`
+- `<public_url_app_manager>`: remplacer par ip_de_votre_machine:3000 ou le nom de domaine associé a la machine dans la partie `sesame-orchestrator.labels`
+
 Pour lancer les services la première fois et par la suite pour mettre a jours, exécuter la commande suivante :
 
 ```bash
