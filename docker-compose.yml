@@ -11,7 +11,7 @@ services:
       - SESAME_APP_API_URL=<public_url_orchestrator>
     volumes:
       - ./configs/sesame-app-manager/statics:/data/src/public/config
-    expose:
+    ports:
       - "3000"
     networks:
       - sesame
@@ -37,7 +37,7 @@ services:
     volumes:
       - ./configs/sesame-orchestrator/jsonforms:/data/configs/identities/jsonforms
       - ./configs/sesame-orchestrator/validations:/data/configs/identities/validations
-    expose:
+    ports:
       - "4000"
     networks:
       - sesame
