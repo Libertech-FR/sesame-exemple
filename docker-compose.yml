@@ -72,8 +72,6 @@ services:
     restart: always
     networks:
       - sesame
-    ports:
-      - "27017:27017"
     volumes:
       - sesame-mongo:/data/db
 
@@ -85,8 +83,6 @@ services:
     restart: always
     networks:
       - sesame
-    ports:
-      - "6379:6379"
     command: redis-server --appendonly yes
 
 volumes:
