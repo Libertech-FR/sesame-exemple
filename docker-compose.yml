@@ -12,7 +12,7 @@ services:
     volumes:
       - ./configs/sesame-app-manager/statics:/data/src/public/config
     ports:
-      - "3000"
+      - "3000:3000"
     networks:
       - sesame
       - reverse
@@ -38,7 +38,7 @@ services:
       - ./configs/sesame-orchestrator/jsonforms:/data/configs/identities/jsonforms
       - ./configs/sesame-orchestrator/validations:/data/configs/identities/validations
     ports:
-      - "4000"
+      - "4000:4000"
     networks:
       - sesame
       - reverse
