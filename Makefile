@@ -15,22 +15,22 @@ sesame-update: ## Update the Sesame server
 	@docker compose up -d
 
 sesame-import-taiga: ## Import Taiga data
-        @docker run --rm -it \
-          -v $(CURDIR)/configs:/app/configs \
-          --network sesame \
-          ghcr.io/libertech-fr/sesame-taiga_crawler:latest
+	@docker run --rm -it \
+		-v $(CURDIR)/configs:/app/configs \
+		--network sesame \
+		ghcr.io/libertech-fr/sesame-taiga_crawler:latest
 
 sesame-generate-jwt-secret: ## Generate a JWT token
 	@docker run --rm mihaigalos/randompass --length 32
 
 sesame-create-agent: ## Create new agent in Sesame ochestrator
-        @docker exec -it sesame-orchestrator \
-          yarn console agents create
+	@docker exec -it sesame-orchestrator \
+		yarn console agents create
 
 sesame-create-keyring: ## Create new keyring token for Sesame ochestrator API
-        @docker exec -it sesame-orchestrator \
-          yarn console keyrings create
+	@docker exec -it sesame-orchestrator \
+		yarn console keyrings create
 
 sesame-backends-syncall: ## Sync all identities from TO_SYNC status
-        @docker exec -it sesame-orchestrator \
-          yarn console backends syncall
+	@docker exec -it sesame-orchestrator \
+		yarn console backends syncall

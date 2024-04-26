@@ -125,6 +125,34 @@ configs/
       | logo.png  | Logo de l'organisation. |
       | login.png | Image de fond de la page de connexion. |
 
+### Sesame Orchestrator
+  Exemple de dossier : [ici](https://github.com/Libertech-FR/sesame-exemple/tree/main/configs/sesame-orchestrator)
+
+  #### validations
+  [Exemple de validations](https://github.com/Libertech-FR/sesame-exemple/tree/main/configs/sesame-orchestrator/validations)
+
+  [Exemple de fichier de validation](https://github.com/Libertech-FR/sesame-exemple/blob/main/configs/sesame-orchestrator/validations/supann.yml)
+
+  Ajouter les fichiers de validation des objets dans le dossier `configs/sesame-orchestrator/validations/`.
+
+  Créer un fichier de validation pour chaque objet à importer. Les fichiers de validation sont des fichiers YAML qui définissent les règles de validation des objets. Les fichiers de validation sont utilisés par l'orchestrateur pour valider les objets avant de les importer dans la base de données et pour valider des modifications dans l'interface.
+
+  Bien nommer les fichiers de validation pour qu'ils correspondent aux noms des objets à importer. Par exemple, pour un objet `Person`, nommer le fichier `person.yml`
+
+  Pour plus de details sur le fichier merci de suivre cette documentation : [Validation d'identité](https://libertech-fr.github.io/sesame-orchestrator/additional-documentation/documentation-utilisateur/validation-des-schemas-compl%C3%A9mentaires-de-l'identit%C3%A9.html)
+
+  #### jsonforms
+
+  [Exemple de jsonforms](https://github.com/Libertech-FR/sesame-exemple/tree/main/configs/sesame-orchestrator/jsonforms)
+
+  [Exemple de fichier de formulaire](https://github.com/Libertech-FR/sesame-exemple/blob/main/configs/sesame-orchestrator/jsonforms/supann.ui.yml)
+  
+  Ajouter les formulaires JSON pour les objets dans le dossier `configs/sesame-orchestrator/jsonforms/`. Ces formulaires serront utilisé par la librairie [jsonforms](https://jsonforms.io/docs/uischema) pour générer les formulaires de création et de modification des objets dans l'interface.
+
+  Ici deux solutions, soit vous devez créer un fichier pour chaque objet que vous voulez importer, avec la convention suivante : `nom_object_class.ui.yml`. Par exemple, pour un objet `Person`, nommer le fichier `person.ui.yml`.
+
+  Soit vous pouvez utiliser la commande `make generate-jsonforms` pour générer automatiquement les formulaires pour tous les objets à partir des fichiers de validation. Pour cela, il faut que les fichiers de validation soient déjà présents dans le dossier `configs/sesame-orchestrator/validations/`.
+
 ### Sesame Taiga Crawler (optionnel)
   Exemple de dossier : [ici](https://github.com/Libertech-FR/sesame-exemple/tree/main/configs/sesame-taiga-crawler)
 
@@ -225,34 +253,6 @@ Certains champs sont requis pour la creation d'un objet dans la base de données
   ```
 
   Pour toute operation sur les champs, il est possible d'ajouter une fonction de transformation descrite dans la documentation de [DataWeaver Transformations](https://github.com/RICHARD-Quentin/DataWeaver/blob/main/README.md#configuration-file-transforms)
-### Sesame Orchestrator
-  Exemple de dossier : [ici](https://github.com/Libertech-FR/sesame-exemple/tree/main/configs/sesame-orchestrator)
-
-  #### validations
-  [Exemple de validations](https://github.com/Libertech-FR/sesame-exemple/tree/main/configs/sesame-orchestrator/validations)
-
-  [Exemple de fichier de validation](https://github.com/Libertech-FR/sesame-exemple/blob/main/configs/sesame-orchestrator/validations/supann.yml)
-
-  Ajouter les fichiers de validation des objets dans le dossier `configs/sesame-orchestrator/validations/`.
-
-  Créer un fichier de validation pour chaque objet à importer. Les fichiers de validation sont des fichiers YAML qui définissent les règles de validation des objets. Les fichiers de validation sont utilisés par l'orchestrateur pour valider les objets avant de les importer dans la base de données et pour valider des modifications dans l'interface.
-
-  Bien nommer les fichiers de validation pour qu'ils correspondent aux noms des objets à importer. Par exemple, pour un objet `Person`, nommer le fichier `person.yml`
-
-  Pour plus de details sur le fichier merci de suivre cette documentation : [Validation d'identité](https://libertech-fr.github.io/sesame-orchestrator/additional-documentation/documentation-utilisateur/validation-des-schemas-compl%C3%A9mentaires-de-l'identit%C3%A9.html)
-
-  #### jsonforms
-
-  [Exemple de jsonforms](https://github.com/Libertech-FR/sesame-exemple/tree/main/configs/sesame-orchestrator/jsonforms)
-
-  [Exemple de fichier de formulaire](https://github.com/Libertech-FR/sesame-exemple/blob/main/configs/sesame-orchestrator/jsonforms/supann.ui.yml)
-  
-  Ajouter les formulaires JSON pour les objets dans le dossier `configs/sesame-orchestrator/jsonforms/`. Ces formulaires serront utilisé par la librairie [jsonforms](https://jsonforms.io/docs/uischema) pour générer les formulaires de création et de modification des objets dans l'interface.
-
-  Ici deux solutions, soit vous devez créer un fichier pour chaque objet que vous voulez importer, avec la convention suivante : `nom_object_class.ui.yml`. Par exemple, pour un objet `Person`, nommer le fichier `person.ui.yml`.
-
-  Soit vous pouvez utiliser la commande `make generate-jsonforms` pour générer automatiquement les formulaires pour tous les objets à partir des fichiers de validation. Pour cela, il faut que les fichiers de validation soient déjà présents dans le dossier `configs/sesame-orchestrator/validations/`.
-
 ## 4. Lancement
 
 Pour toute les operations de lancement, de mise a jours ou de build, il est necessaire d'utiliser le fichier `docker-compose.yml`. Certaines commandes sont aussi disponible dans le fichier `Makefile` pour simplifier les operations.
