@@ -17,7 +17,9 @@ sesame-update: ## Update the Sesame server
 sesame-import-taiga: ## Import Taiga data
 	@docker pull ghcr.io/libertech-fr/sesame-taiga_crawler:latest
 	@docker run --rm -it \
-		-v $(CURDIR)/configs:/data/configs \
+		-v $(CURDIR)/configs/sesame-taiga-crawler/config.yml:/data/config.yml \
+		-v $(CURDIR)/configs/sesame-taiga-crawler/data:/data/data \
+                -v $(CURDIR)/configs/sesame-taiga-crawler/cache:/data/cache \
 		-v $(CURDIR)/configs/sesame-taiga-crawler/.env:/data/.env \
 		--network sesame \
 		ghcr.io/libertech-fr/sesame-taiga_crawler:latest
