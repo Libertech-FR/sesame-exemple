@@ -1,0 +1,22 @@
+entries:
+  - icon: mdi-account-off
+    label: Etudiants
+    path: "/identities?sort[metadata.lastUpdatedAt]=desc&skip=0&filters[^additionalFields.attributes.supannPerson.supannTypeEntiteAffectation]=/etd/i"
+    color: primary
+    part: Affectations
+    badgeValue: ETD
+
+  - icon: mdi-account-tie
+    label: Administratifs
+    path: "/identities?sort[metadata.lastUpdatedAt]=desc&skip=0&filters[^additionalFields.attributes.supannPerson.supannTypeEntiteAffectation]=/adm/i"
+    color: primary
+    part: Affectations
+    badgeValue: ADM
+
+  - icon: mdi-account-group
+    label: Enseignants
+    path: "/identities?sort[metadata.lastUpdatedAt]=desc&skip=0&filters[^additionalFields.attributes.supannPerson.supannTypeEntiteAffectation]=/esn/i"
+    color: primary
+    part: Affectations
+    badgeValue: ESN
+
