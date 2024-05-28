@@ -49,19 +49,6 @@ services:
       - "traefik.http.routers.sesame-orchestrator.rule=Host(`<public_url_orchestrator>`)"
       - "traefik.http.services.sesame-orchestrator.loadbalancer.server.port=4000"
 
-  sesame-daemon:
-    container_name: sesame-daemon
-    image: ghcr.io/libertech-fr/sesame-daemon:latest
-    restart: always
-    depends_on:
-      - sesame-redis
-    environment:
-      - SESAME_REDIS_URI=redis://sesame-redis:6379
-    networks:
-      - sesame
-    volumes:
-      - ./configs/sesame-daemon/backends:/data/backends
-
   sesame-mongo:
     image: mongo:7.0
     container_name: sesame-mongo
@@ -70,7 +57,7 @@ services:
     networks:
       - sesame
     volumes:
-      - sesame-mongo:/data/db
+      - ./db:/data/db
 
   sesame-redis:
     image: redis
@@ -83,7 +70,6 @@ services:
     command: redis-server --appendonly yes
 
 volumes:
-  sesame-mongo:
   sesame-redis:
 
 networks:
