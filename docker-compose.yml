@@ -20,7 +20,7 @@ services:
       - "traefik.enable=true"
       #Décommenter la ligne suivante pour rediriger en HTTPS
       - traefik.http.routers.sesame-app-manager.tls=${TLS}
-      - traefik.http.routers.sesame-app-manager.rule=Host(`${HOST_APP_MANAGER}:3000`)
+      - traefik.http.routers.sesame-app-manager.rule=Host(`${HOST}:3000`)
       - "traefik.http.services.sesame-app-manager.loadbalancer.server.port=3000"
       
   sesame-orchestrator:
