@@ -39,22 +39,9 @@ Installation de make :
 ```
 apt install make
 ```
-- Pour Alpine
-```
-apk add make
-```
+Installer docker 
 
-- Pour MacOs
-```
-brew install make
-```
 
-- Pour windows
-```
-choco install make
-```
-
-Ou installer directement les fichier [ici](https://gnuwin32.sourceforge.net/packages/make.htm)
 ## 2. Installation
 
 ### Téléchargement du repo
