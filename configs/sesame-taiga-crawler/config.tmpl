@@ -35,7 +35,7 @@ taiga_etd.json:
     state: -1
     inetOrgPerson.employeeType: "TAIGA"
     inetOrgPerson.departmentNumber: "etd"
-    additionalFields.attributes.supannPerson.supannEtablissement: "{UAI}0690184A"
+    additionalFields.attributes.supannPerson.supannEtablissement: "{UAI}${SUPANET}"
   transforms: 
     inetOrgPerson.cn: "join(delimiter=' ')"
     inetOrgPerson.displayName: "join(delimiter=' ')"
@@ -85,6 +85,7 @@ taiga_adm.json:
     additionalFields.objectClasses: 
     - "supannPerson"
     additionalFields.attributes.supannPerson.supannTypeEntiteAffectation: "adm"
+    additionalFields.attributes.supannPerson.supannEtablissement: "{UAI}${SUPANET}"
     inetOrgPerson.employeeType: "TAIGA"
     inetOrgPerson.departmentNumber: "adm"
     state: -1
@@ -137,6 +138,7 @@ taiga_esn.json:
     additionalFields.objectClasses: 
     - "supannPerson"
     additionalFields.attributes.supannPerson.supannTypeEntiteAffectation: "esn"
+    additionalFields.attributes.supannPerson.supannEtablissement: "{UAI}${SUPANET}"
     inetOrgPerson.departmentNumber: "esn"
     inetOrgPerson.employeeType: "TAIGA"
     state: -1
