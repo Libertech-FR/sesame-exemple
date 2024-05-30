@@ -1,5 +1,8 @@
 
-# Guide de démarrage - Application de Synchronisation d'Identités
+# Guide d'installation rapide 
+
+Vous pouvez consulter ce guide d'installation rapise : [INSTALLATION](https://github.com/Libertech-FR/sesame-exemple/INSTALLATION.md)
+# Installation manuelle  - Application de Synchronisation d'Identités
 
 ## Sommaire
 
