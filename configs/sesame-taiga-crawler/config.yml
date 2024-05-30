@@ -140,7 +140,6 @@ taiga_esn.json:
     inetOrgPerson.departmentNumber: "esn"
     inetOrgPerson.employeeType: "TAIGA"
     state: -1
-    $setOnInsert.additionalFields.attributes.sogxuser.sogxdisableflag: "0"
   transforms: 
     inetOrgPerson.cn: "join(delimiter=' ')"
     inetOrgPerson.displayName: "join(delimiter=' ')"
