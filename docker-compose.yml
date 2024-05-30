@@ -11,6 +11,7 @@ services:
       - SESAME_APP_API_URL=${HOST}:4000
     volumes:
       - ./configs/sesame-app-manager/statics:/data/src/public/config
+      - ./configs/sesame-app-manager/config:/data/config
     ports:
       - "3000:3000"
     networks:
@@ -64,6 +65,8 @@ services:
     container_name: sesame-redis
     volumes:
       - sesame-redis:/data
+    ports:
+      - "127.0.0.1:6379:6379"
     restart: always
     networks:
       - sesame
