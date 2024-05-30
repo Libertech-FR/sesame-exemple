@@ -1,6 +1,14 @@
 #!/bin/bash 
-set -x
+#set -x
 #Verification si docker est installé
+# test si le cpu supporte avx
+cat /proc/cpuinfo|grep -i avx >/dev/null 2>/dev/null 
+OK=$?
+if [ $OK = 1 ];then 
+  echo "le CPU doit avoir la fonctionnalité AVX"
+  echo "Installaion impossible"
+  exit 1 
+fi
 type docker 2>/dev/null >/dev/null
 OK=$?
 if [ $OK = 1 ];then
@@ -29,7 +37,11 @@ else
 fi 
 PWD=`pwd`
 read -p "Répertoire d'installation ($PWD) :" mypwd   
-read -p "Ip ou nom du serveur :" HOST
+read -p "Url du serveur (http(s)://(nom|ip):" HOST
+read -p "Nom de domaine des emails : " DOMAIN
+read -p "Numero d'etablissement SUPANN : " SUPANET
+export DOMAIN
+export SUPANET 
 echo $mypwd
 if [ "$mypwd" = "" ];then 
 	mypwd=$PWD
@@ -50,21 +62,27 @@ cd $mypwd
 docker network create sesame
 docker network create reverse
 docker pull mihaigalos/randompass
-docker compose pull
 #docker compose up -d
 KEY=`make sesame-generate-jwt-secret`
 # Generation .env 
-echo JWT_SECRET=$KEY >.env
+echo JWT_SECRET=\'$KEY\' >.env
 echo HOST=$HOST >>.env
 echo TLS=false >>.env
 echo "Demarrage services"
+docker compose pull
 docker compose up -d
+mkdir configs/sesame-taiga-crawler/cache
+chown 10001 configs/sesame-taiga-crawler/cache
+mkdir configs/sesame-taiga-crawler/data
+chown 10001 configs/sesame-taiga-crawler/data
 # installation compte admin 
 echo "CREATION COMPTE ADMIN"
 make sesame-create-agent
 ### Install Keying Taiga
 docker cp install/createTargaKeyring.sh sesame-orchestrator:/tmp
 docker exec -it sesame-orchestrator /tmp/createTargaKeyring.sh >/tmp/key_taiga
+echo "Parametres de connexion à TAIGA"
+echo "-------------------------------"
 read -e -p "URL TAIGA (https://taiga.archi.fr) :" -i https://taiga.archi.fr URL_TAIGA
 read -e -p "PORT (443) : " -i 443  PORT_TAIGA
 read -p "UTILISATEUR TAIGA :" USER_TAIGA
@@ -80,3 +98,10 @@ echo STC_API_FORWARD_PORT=${PORT_TAIGA} >>configs/sesame-taiga-crawler/.env
 echo STC_API_PASSENSA=${PASSWORD_ENSA} >>configs/sesame-taiga-crawler/.env
 echo SESAME_API_TOKEN=`cat /tmp/key_taiga` >>configs/sesame-taiga-crawler/.env
 rm -rf /tmp/key_taiga
+#generation config.yml
+cat configs/sesame-taiga-crawler/config.tmpl |envsubst '${DOMAIN} ${SUPANET}' >configs/sesame-taiga-crawler/config.yml
+echo "------------------------------"
+echo "L'installation est terminée"
+echo "Vous pouvez vous connecter à l interface via $HOST:3000"
+echo "Pour lancer l'importation taiga dans le repertoire $mypwd lancez la commande make sesame-import-taiga"
+echo "-----------------------------"
