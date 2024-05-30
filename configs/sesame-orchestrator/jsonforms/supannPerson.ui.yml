@@ -7,6 +7,7 @@ elements:
         label: Civilité
         scope: "#/properties/supanncivilite"
         options:
+          readOnly: true
           required: true
           suggestion:
             - M.
@@ -16,6 +17,7 @@ elements:
         label: supannNomdeNaissance
         scope: "#/properties/supannNomdeNaissance"
         options:
+          readOnly: true
           required: false
       - type: Control
         label: supannOIDCDatedeNaissance
@@ -23,6 +25,7 @@ elements:
         options:
           format: date
           required: true
+          readOnly: true
           dateFormat: "dd/MM/yyyy"
   - type: HorizontalLayout
     elements:
@@ -31,16 +34,19 @@ elements:
         scope: "#/properties/supannOIDCGenre"
         options:
           required: true
+          readOnly: true
       - type: Control
         label: supannPrenomsEtatCivil
         scope: "#/properties/supannPrenomsEtatCivil"
         options:
           required: true
+          readOnly: true
       - type: Control
         label: supannCodeINSEEPaysDeNaissance
         scope: "#/properties/supannCodeINSEEPaysDeNaissance"
         options:
           required: true
+          readOnly: true
   - type: HorizontalLayout
     elements:
       - type: Control
@@ -48,16 +54,19 @@ elements:
         scope: "#/properties/supannCodeINSEEVilleDeNaissance"
         options:
           required: false
+          readOnly: true
       - type: Control
         label: supannAutreMail
         scope: "#/properties/supannAutreMail"
         options:
           required: true
+          readOnly: true
       - type: Control
         label: supannListeRouge
         scope: "#/properties/supannListeRouge"
         options:
           required: false
+          readOnly: true
   - type: HorizontalLayout
     elements:
       - type: Control
@@ -65,16 +74,19 @@ elements:
         scope: "#/properties/mailForwardingAddress"
         options:
           required: false
+          readOnly: true
       - type: Control
         label: supannMailPerso
         scope: "#/properties/supannMailPerso"
         options:
           required: false
+          readOnly: true
       - type: Control
         label: supannRoleGenerique
         scope: "#/properties/supannRoleGenerique"
         options:
           required: false
+          readOnly: true
   - type: HorizontalLayout
     elements:
       - type: Control
@@ -83,6 +95,7 @@ elements:
         options:
           format: number
           required: false
+          readOnly: true
       - type: Control
         label: supannParrainDN
         scope: "#/properties/supannParrainDN"
@@ -105,8 +118,10 @@ elements:
         scope: "#/properties/supannActivite"
         options:
           required: false
+          readOnly: true
       - type: Control
         label: supannEmpDateFin
         scope: "#/properties/supannEmpDateFin"
         options:
           required: false
+          readOnly: true

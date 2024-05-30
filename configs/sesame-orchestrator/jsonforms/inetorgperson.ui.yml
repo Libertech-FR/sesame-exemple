@@ -13,19 +13,25 @@ elements:
     scope: "#/properties/cn"
     options:
       required: true
+      readOnly: true
   - type: Control
     label: Nom
     scope: "#/properties/sn"
     options:
+      readOnly: true
       required: true
 - type: HorizontalLayout
   elements:
   - type: Control
     label: Nom d'affichage
     scope: "#/properties/displayName"
+    options:
+      readOnly: true
   - type: Control
     label: Prénom
     scope: "#/properties/givenName"
+    options:
+      readOnly: true
 - type: HorizontalLayout
   elements:
   - type: Control
@@ -36,9 +42,13 @@ elements:
   - type: Control
     label: Mobile
     scope: "#/properties/mobile"
+    options:
+      readOnly: true
   - type: Control
     label: Adresse postale
     scope: "#/properties/postalAddress"
+    options:
+      readOnly: true
 - type: HorizontalLayout
   elements:
   - type: Control
@@ -54,6 +64,8 @@ elements:
   - type: Control
     label: Téléphone
     scope: "#/properties/telephoneNumber"
+    options:
+      readOnly: true
   - type: Control
     label: Titre
     scope: "#/properties/title"
