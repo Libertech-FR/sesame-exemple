@@ -8,7 +8,7 @@ services:
     depends_on:
       - sesame-orchestrator
     environment:
-      - SESAME_APP_API_URL=<public_url_orchestrator>
+      - SESAME_APP_API_URL=${HOST}:4000
     volumes:
       - ./configs/sesame-app-manager/statics:/data/src/public/config
     ports:
