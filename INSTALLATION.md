@@ -53,7 +53,7 @@ CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
 
 ## Installation de sesame
 
-``` 
+
 
 creer un repertoire pour accueillir l'installation ( dans notre guide /data/sesame)
 
