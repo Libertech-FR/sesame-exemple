@@ -126,6 +126,7 @@ make sesame-import-taiga
 ```
 
 L'etape suivante est l'installation des backends
+Continuez avec la documentation [INSTALLATION_SESAME-DAEMON.md](./INSTALLATION_SESAME-DAEMON.md)
 
 
 
