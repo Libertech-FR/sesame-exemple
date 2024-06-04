@@ -3,7 +3,7 @@
 ## Prérequis
 * Linux Debian 12 
 * Docker >= version 26
-* Une machine ou VM avec l option CPU AVX 
+* Une machine ou VM avec l option CPU AVX ( Si vous êtes sur VMWARE consultez VMWARE-AVX.md) 
 * make installé
 * curl installé
 
@@ -35,6 +35,11 @@ echo \
   "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian \
   $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
 
+```
+Mettez à jour les depots 
+
+```
+apt-get update
 ```
 
 Installez Docker 
