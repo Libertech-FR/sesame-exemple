@@ -3,7 +3,7 @@
 ## Prérequis
 * Linux Debian 12 
 * Docker >= version 26
-* Une machine ou VM avec l option CPU AVX ( Si vous êtes sur VMWARE consultez VMWARE-AVX.md) 
+* Une machine ou VM avec l option CPU AVX ( Si vous êtes sur VMWARE consultez [AVX_SUR_VMWARE.md](./AVX_SUR_VMWARE.md) 
 * make installé
 * curl installé
 
@@ -126,6 +126,7 @@ make sesame-import-taiga
 ```
 
 L'etape suivante est l'installation des backends
+Continuez avec la documentation [INSTALLATION_SESAME-DAEMON.md](./INSTALLATION_SESAME-DAEMON.md)
 
 
 
