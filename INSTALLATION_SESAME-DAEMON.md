@@ -88,6 +88,73 @@ Installez les dépendances :
 
 ## Configuration du backend LDAP 
 
+Copiez le fichier exemple sur config.conf
+
+```
+cd /var/lib/sesame-daemon/backends/01openldap/etc
+cp config.conf.exemple config.conf
+```
+
+### config.conf : 
+
+```
+host=myldap.mydomain.com
+dn=cn=manager,cn=internal,dc=mydomain,dc=com
+password=MyPassword
+base=dc=mydomain,dc=com
+userbase=ou=peoples,dc=mydomain,dc=com
+rdnattribute=uid
+branchForEtd=ou=Etudiants
+branchForAdm=ou=Administratifs
+branchForEsn=ou=Enseignants
+branchAttr=supannTypeEntiteAffectation
+backendFor=adm,etd,esn
+```
+
+* host : addresse de votre serveur ldap sous la forme simple ou en URL (ldap://monserveur:389 ou ldaps://monserveur:636)
+* dn : le dn de connexion (il doit avoir les droits d'écriture sur les branches )
+* password : mot de passe du DN ci dessus 
+* base : votre base LDAP 
+* userbase : la branche dans laquelle seront créés les comptes 
+* rdnattribute : l'attribut qui servira à la composition du DN
+* branchForEtd : la sous branche (dans userbase) pour les étudiants. Si ce paramètre est vide les identitées seront créées directememt dans **userbase**
+* branchForAdm : idem pour les administratifs
+* branchForEsn : idem pour les enseignants
+* branchAttr : l'attribut qui sert à determiner dans quelle branche l'identité est crée. 
+* backendFor : liste des types d'identités gérée par le backend ex : adm,esn,etd
+
+### config.yml (à la racine du backend )
+
+```
+_version: 1
+
+name: 'openldap'
+description: 'Backend for openldap'
+active: false
+actions:
+  IDENTITY_PASSWORD_CHANGE:
+    script: "changepasswd"
+    onError: 'stop'
+  IDENTITY_PASSWORD_RESET:
+    script: "resetpasswd"
+    onError: 'stop'
+  IDENTITY_CREATE:
+    script: 'upsertidentity'
+    onError: 'stop'
+  IDENTITY_UPDATE:
+    script: 'upsertidentity'
+    onError: 'stop'
+  IDENTITY_DELETE:
+    script: 'dummy.sh'
+    onError: 'stop'
+  PING_TARGET:
+    script: 'dummy.sh'
+    onError: 'continue'
+```
+Ce fichier decrit, selon les actions, les scripts qui seront lancés 
+
+Le seul paramètre que vous pouvez regler est : 
+* action : (false|true) Rend actif le backend 
 
 
 
