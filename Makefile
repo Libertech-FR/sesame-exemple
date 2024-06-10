@@ -23,15 +23,16 @@ sesame-import-taiga: ## Import Taiga data
 		-v $(CURDIR)/configs/sesame-taiga-crawler/.env:/data/.env \
 		--network sesame \
 		ghcr.io/libertech-fr/sesame-taiga_crawler:latest
+
 sesame-import: ## Import data
-        @docker pull ghcr.io/libertech-fr/sesame-crawler:latest
-        @docker run --rm -it \
-                -v $(CURDIR)/configs/sesame-crawler/config.yml:/data/config.yml \
-                -v $(CURDIR)/configs/sesame-crawler/data:/data/data \
-                -v $(CURDIR)/configs/sesame-crawler/cache:/data/cache \
-                -v $(CURDIR)/configs/sesame-crawler/.env:/data/.env \
-                --network sesame \
-                ghcr.io/libertech-fr/sesame-crawler:latest
+	@docker pull ghcr.io/libertech-fr/sesame-crawler:latest
+	@docker run --rm -it \
+		-v $(CURDIR)/configs/sesame-crawler/config.yml:/data/config.yml \
+		-v $(CURDIR)/configs/sesame-crawler/data:/data/data \
+		-v $(CURDIR)/configs/sesame-crawler/cache:/data/cache \
+		-v $(CURDIR)/configs/sesame-crawler/.env:/data/.env \
+		--network sesame \
+		ghcr.io/libertech-fr/sesame-crawler:latest
 
 sesame-generate-jwt-secret: ## Generate a JWT token
 	@docker run --rm mihaigalos/randompass --length 32

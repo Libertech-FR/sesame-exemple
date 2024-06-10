@@ -97,9 +97,24 @@ echo STC_API_PASSWORD=${PASSWORD_TAIGA} >>configs/sesame-taiga-crawler/.env
 echo STC_API_FORWARD_PORT=${PORT_TAIGA} >>configs/sesame-taiga-crawler/.env
 echo STC_API_PASSENSA=${PASSWORD_ENSA} >>configs/sesame-taiga-crawler/.env
 echo SESAME_API_TOKEN=`cat /tmp/key_taiga` >>configs/sesame-taiga-crawler/.env
-rm -rf /tmp/key_taiga
 #generation config.yml
 cat configs/sesame-taiga-crawler/config.tmpl |envsubst '${DOMAIN} ${SUPANET}' >configs/sesame-taiga-crawler/config.yml
+echo "INSTALL Import"
+### Install Keying import
+mkdir import 
+mkdir import/cache 
+mkdir import/data
+chown 10001 import/data
+chown 10001 import/cache
+docker cp install/createImportKeyring.sh sesame-orchestrator:/tmp
+docker exec -it sesame-orchestrator /tmp/createImportKeyring.sh >/tmp/key_taiga
+echo "Parametres de connexion à TAIGA"
+echo "-------------------------------"
+echo SESAME_API_BASEURL=http://sesame-orchestrator:4000 >import/.env
+echo SESAME_IMPORT_PARALLELS_FILES=1 >>import/.env
+echo SESAME_IMPORT_PARALLELS_ENTRIES=5 >>import/.env
+echo SESAME_API_TOKEN=`cat /tmp/key_taiga` >>import/.env
+rm -rf /tmp/key_taiga
 echo "------------------------------"
 echo "L'installation est terminée"
 echo "Vous pouvez vous connecter à l interface via $HOST:3000"
