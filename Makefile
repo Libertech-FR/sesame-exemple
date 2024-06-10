@@ -27,10 +27,10 @@ sesame-import-taiga: ## Import Taiga data
 sesame-import: ## Import data
 	@docker pull ghcr.io/libertech-fr/sesame-crawler:latest
 	@docker run --rm -it \
-		-v $(CURDIR)/configs/sesame-crawler/config.yml:/data/config.yml \
-		-v $(CURDIR)/configs/sesame-crawler/data:/data/data \
-		-v $(CURDIR)/configs/sesame-crawler/cache:/data/cache \
-		-v $(CURDIR)/configs/sesame-crawler/.env:/data/.env \
+		-v $(CURDIR)/import/config.yml:/data/config.yml \
+		-v $(CURDIR)/import/data:/data/data \
+		-v $(CURDIR)/import/cache:/data/cache \
+		-v $(CURDIR)/import/.env:/data/.env \
 		--network sesame \
 		ghcr.io/libertech-fr/sesame-crawler:latest
 
