@@ -82,27 +82,6 @@ chown 10001 configs/sesame-taiga-crawler/data
 # installation compte admin 
 echo "CREATION COMPTE ADMIN"
 make sesame-create-agent
-### Install Keying Taiga
-docker cp install/createTargaKeyring.sh sesame-orchestrator:/tmp
-docker exec -it sesame-orchestrator /tmp/createTargaKeyring.sh >/tmp/key_taiga
-echo "Parametres de connexion à TAIGA"
-echo "-------------------------------"
-read -e -p "URL TAIGA (https://taiga.archi.fr) :" -i https://taiga.archi.fr URL_TAIGA
-read -e -p "PORT (443) : " -i 443  PORT_TAIGA
-read -p "UTILISATEUR TAIGA :" USER_TAIGA
-read -p "MOT DE PASSE : " PASSWORD_TAIGA 
-read -p "MOT DE PAS ENSA : " PASSWORD_ENSA
-echo SESAME_API_BASEURL=http://sesame-orchestrator:4000 >configs/sesame-taiga-crawler/.env
-echo SESAME_IMPORT_PARALLELS_FILES=1 >>configs/sesame-taiga-crawler/.env
-echo SESAME_IMPORT_PARALLELS_ENTRIES=5 >>configs/sesame-taiga-crawler/.env
-echo STC_API_BASEURL=${URL_TAIGA} >>configs/sesame-taiga-crawler/.env            
-echo STC_API_USERNAME=${USER_TAIGA} >>configs/sesame-taiga-crawler/.env
-echo STC_API_PASSWORD=${PASSWORD_TAIGA} >>configs/sesame-taiga-crawler/.env
-echo STC_API_FORWARD_PORT=${PORT_TAIGA} >>configs/sesame-taiga-crawler/.env
-echo STC_API_PASSENSA=${PASSWORD_ENSA} >>configs/sesame-taiga-crawler/.env
-echo SESAME_API_TOKEN=`cat /tmp/key_taiga` >>configs/sesame-taiga-crawler/.env
-#generation config.yml
-cat configs/sesame-taiga-crawler/config.tmpl |envsubst '${DOMAIN} ${SUPANET}' >configs/sesame-taiga-crawler/config.yml
 echo "INSTALL Import"
 ### Install Keying import
 mkdir import 
@@ -122,5 +101,5 @@ rm -rf /tmp/key_taiga
 echo "------------------------------"
 echo "L'installation est terminée"
 echo "Vous pouvez vous connecter à l interface via $HOST:3000"
-echo "Pour lancer l'importation taiga dans le repertoire $mypwd lancez la commande make sesame-import-taiga"
+scho "Pour lancer l'importation taiga dans le repertoire $mypwd lancez la commande make sesame-import-taiga"
 echo "-----------------------------"
