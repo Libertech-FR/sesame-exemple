@@ -58,6 +58,10 @@ curl -L https://api.github.com/repos/Libertech-FR/sesame-exemple/tarball/main | 
 cd Libertech-FR-sesame*
 find .|cpio -pdvum $mypwd
 cd $mypwd
+#copy docker-compose.yml 
+if [ ! -f "docker-compose.yml" ];then
+	cp docker-compose.yml.example docker-compose.yml
+fi
 #creation des networks
 docker network create sesame
 docker network create reverse
