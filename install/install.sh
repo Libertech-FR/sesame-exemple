@@ -101,5 +101,4 @@ rm -rf /tmp/key_taiga
 echo "------------------------------"
 echo "L'installation est terminée"
 echo "Vous pouvez vous connecter à l interface via $HOST:3000"
-scho "Pour lancer l'importation taiga dans le repertoire $mypwd lancez la commande make sesame-import-taiga"
 echo "-----------------------------"
