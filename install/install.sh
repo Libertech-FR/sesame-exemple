@@ -38,10 +38,6 @@ fi
 PWD=`pwd`
 read -p "Répertoire d'installation ($PWD) :" mypwd   
 read -p "Url du serveur (http(s)://(nom|ip):" HOST
-read -p "Nom de domaine des emails : " DOMAIN
-read -p "Numero d'etablissement SUPANN : " SUPANET
-export DOMAIN
-export SUPANET 
 echo $mypwd
 if [ "$mypwd" = "" ];then 
 	mypwd=$PWD
@@ -91,7 +87,6 @@ chown 10001 import/data
 chown 10001 import/cache
 docker cp install/createImportKeyring.sh sesame-orchestrator:/tmp
 docker exec -it sesame-orchestrator /tmp/createImportKeyring.sh >/tmp/key_taiga
-echo "Parametres de connexion à TAIGA"
 echo "-------------------------------"
 echo SESAME_API_BASEURL=http://sesame-orchestrator:4000 >import/.env
 echo SESAME_IMPORT_PARALLELS_FILES=1 >>import/.env

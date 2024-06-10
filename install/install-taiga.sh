@@ -6,6 +6,10 @@ read -p "UTILISATEUR TAIGA :" USER_TAIGA
 read -p "MOT DE PASSE : " PASSWORD_TAIGA  
 read -p "Code Ensa : " CODEENSA
 read -p "MOT DE PAS ENSA : " PASSWORD_ENSA
+read -p "Nom de domaine des emails : " DOMAIN
+read -p "Numero d'etablissement SUPANN : " SUPANET
+export DOMAIN
+export SUPANET 
 #GEneration du token 
 mkdir configs/sesame-taiga-crawler/cache 
 chown 10001 configs/sesame-taiga-crawler/cache
