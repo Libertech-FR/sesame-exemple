@@ -70,3 +70,8 @@ sesame-create-keyring: ## Create new keyring token for Sesame ochestrator API
 sesame-backends-syncall: ## Sync all identities from TO_SYNC status
 	@docker exec -it sesame-orchestrator \
 		yarn console backends syncall
+
+sesame-dump: ## Dump database
+	@[ -d $(CURDIR)/dump ] || mkdir -p $(CURDIR)/dump
+	@chown 999 ${CURDIR}/dump
+	@docker run --rm -it -v ./dump:/data/dump --user=0 --network sesame mongo:7.0 mongodump --host=sesame-mongo --out=/data/dump
