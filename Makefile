@@ -26,8 +26,8 @@ sesame-self-update: ## Self update Sesame Makefile
 		echo "Un Makefile est présent. Création d'un point de restauration (.Makefile.$${MOD_DATE})"; \
 		mv Makefile .Makefile.$${MOD_DATE}; \
 	fi
-	@curl -o Makefile $(MAKEFILE_SELF_REPO)
-	if [ $$? -ne 0 ]; then \
+	@curl -s -o Makefile $(MAKEFILE_SELF_REPO)
+	@if [ $$? -ne 0 ]; then \
 		echo "Le téléchargement du nouveau Makefile a échoué. Restauration de l'ancien Makefile..."; \
 		mv Makefile.$${MOD_DATE} Makefile; \
 	else \
