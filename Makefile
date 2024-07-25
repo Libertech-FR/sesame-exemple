@@ -1,4 +1,7 @@
 TMP_DIR := /tmp
+MAKEFILE_NAME := Makefile
+MAKEFILE_SELF_BRANCH := main
+MAKEFILE_SELF_REPO := https://raw.githubusercontent.com/Libertech-FR/sesame-exemple/$(MAKEFILE_SELF_BRANCH)/$(MAKEFILE_NAME)
 DAEMON_PLATFORM := amd64
 DAEMON_PKG_NAME := sesame-daemon_%s_$(DAEMON_PLATFORM).deb
 DAEMON_REPO := libertech-fr/sesame-daemon
@@ -16,6 +19,11 @@ sesame-run: ## Run the Sesame server
 
 sesame-stop: ## Stop the Sesame server
 	@docker compose down
+
+sesame-self-update: ## Self update Sesame Makefile
+		@echo "Mise à jour du fichier Makefile..."
+		@curl -o $(MAKEFILE_NAME)2 $(MAKEFILE_SELF_REPO)
+		@echo "Mise à jour terminée."
 
 sesame-update: ## Update the Sesame server
 	@docker compose pull
