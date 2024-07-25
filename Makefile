@@ -22,7 +22,7 @@ sesame-stop: ## Stop the Sesame server
 
 sesame-self-update: ## Self update Sesame Makefile
 		@echo "Mise à jour du fichier Makefile..."
-		@curl -o $(MAKEFILE_NAME)2 $(MAKEFILE_SELF_REPO)
+		@curl -o $(MAKEFILE_NAME) $(MAKEFILE_SELF_REPO)
 		@echo "Mise à jour terminée."
 
 sesame-update: ## Update the Sesame server
