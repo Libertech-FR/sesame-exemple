@@ -1,3 +1,6 @@
+#!/usr/bin/make -f
+# Version: 2024-07-25_12-12-0
+
 TMP_DIR := /tmp
 MAKEFILE_SELF_BRANCH := main
 MAKEFILE_SELF_REPO := https://raw.githubusercontent.com/Libertech-FR/sesame-exemple/$(MAKEFILE_SELF_BRANCH)/Makefile
