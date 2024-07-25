@@ -1,5 +1,5 @@
 #!/usr/bin/make -f
-# Version: 2024-07-25_12-12-0
+# Version: 2024-07-25_12-14
 
 TMP_DIR := /tmp
 MAKEFILE_SELF_BRANCH := main
@@ -29,7 +29,7 @@ sesame-self-update: ## Self update Sesame Makefile
 		echo "Un Makefile est présent. Création d'un point de restauration (.Makefile.$${MOD_DATE})"; \
 		mv Makefile .Makefile.$${MOD_DATE}; \
 	fi
-	@curl -s -o Makefile $(MAKEFILE_SELF_REPO)
+	@curl -s -H "Cache-Control: no-cache" -o Makefile $(MAKEFILE_SELF_REPO)
 	@if [ $$? -ne 0 ]; then \
 		echo "Le téléchargement du nouveau Makefile a échoué. Restauration de l'ancien Makefile..."; \
 		mv Makefile.$${MOD_DATE} Makefile; \
@@ -46,7 +46,7 @@ sesame-update-daemon: ## Update the Sesame Daemon (pkg)
 		FINAL_DAEMON_PKG_NAME=$$(printf "$(DAEMON_PKG_NAME)" $$LATEST_TAG); \
 		DOWNLOAD_URL=$$(printf "$(DAEMON_DOWNLOAD_URL)" $$LATEST_TAG $$FINAL_DAEMON_PKG_NAME); \
 		echo "Téléchargement du package <$$FINAL_DAEMON_PKG_NAME> depuis <$$DOWNLOAD_URL>"; \
-		curl -s -L -o $(TMP_DIR)/$$FINAL_DAEMON_PKG_NAME $$DOWNLOAD_URL; \
+		curl -s -H "Cache-Control: no-cache" -L -o $(TMP_DIR)/$$FINAL_DAEMON_PKG_NAME $$DOWNLOAD_URL; \
 		dpkg -i $(TMP_DIR)/$$FINAL_DAEMON_PKG_NAME
 
 sesame-daemon-get-latest: ## Update the Sesame Daemon (pkg)
