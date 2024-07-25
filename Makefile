@@ -1,7 +1,6 @@
 TMP_DIR := /tmp
-MAKEFILE_NAME := Makefile
 MAKEFILE_SELF_BRANCH := main
-MAKEFILE_SELF_REPO := https://raw.githubusercontent.com/Libertech-FR/sesame-exemple/$(MAKEFILE_SELF_BRANCH)/$(MAKEFILE_NAME)
+MAKEFILE_SELF_REPO := https://raw.githubusercontent.com/Libertech-FR/sesame-exemple/$(MAKEFILE_SELF_BRANCH)/Makefile
 DAEMON_PLATFORM := amd64
 DAEMON_PKG_NAME := sesame-daemon_%s_$(DAEMON_PLATFORM).deb
 DAEMON_REPO := libertech-fr/sesame-daemon
@@ -22,11 +21,11 @@ sesame-stop: ## Stop the Sesame server
 
 sesame-self-update: ## Self update Sesame Makefile
 	@echo "Mise à jour du fichier Makefile..."
-	@if [ -f $(MAKEFILE_NAME) ]; then \
-		MOD_DATE=$$(date -r $(MAKEFILE_NAME) "+%Y-%m-%d_%H-%M-%S"); \
-		mv $(MAKEFILE_NAME) .$(MAKEFILE_NAME).$${MOD_DATE}; \
+	@if [ -f Makefile ]; then \
+		MOD_DATE=$$(date -r Makefile "+%Y-%m-%d_%H-%M-%S"); \
+		mv Makefile .Makefile.$${MOD_DATE}; \
 	fi
-	@curl -o $(MAKEFILE_NAME) $(MAKEFILE_SELF_REPO)
+	@curl -o Makefile $(MAKEFILE_SELF_REPO)
 	@echo "Mise à jour terminée."
 
 sesame-update: ## Update the Sesame server
