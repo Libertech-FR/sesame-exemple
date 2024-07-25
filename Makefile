@@ -36,6 +36,7 @@ sesame-self-update: ## Self update Sesame Makefile
 	else \
 		echo "Mise à jour terminée."; \
 	fi
+
 sesame-update: ## Update the Sesame server
 	@docker compose pull
 	@docker compose up -d
