@@ -21,9 +21,13 @@ sesame-stop: ## Stop the Sesame server
 	@docker compose down
 
 sesame-self-update: ## Self update Sesame Makefile
-		@echo "Mise à jour du fichier Makefile..."
-		@curl -o $(MAKEFILE_NAME) $(MAKEFILE_SELF_REPO)
-		@echo "Mise à jour terminée."
+	@echo "Mise à jour du fichier Makefile..."
+	@if [ -f $(MAKEFILE_NAME) ]; then \
+		MOD_DATE=$$(date -r $(MAKEFILE_NAME) "+%Y-%m-%d_%H-%M-%S"); \
+		mv $(MAKEFILE_NAME) .$(MAKEFILE_NAME).$${MOD_DATE}; \
+	fi
+	@curl -o $(MAKEFILE_NAME) $(MAKEFILE_SELF_REPO)
+	@echo "Mise à jour terminée."
 
 sesame-update: ## Update the Sesame server
 	@docker compose pull
