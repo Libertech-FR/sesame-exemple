@@ -23,11 +23,16 @@ sesame-self-update: ## Self update Sesame Makefile
 	@echo "Mise à jour du fichier Makefile..."
 	@if [ -f Makefile ]; then \
 		MOD_DATE=$$(date -r Makefile "+%Y-%m-%d_%H-%M-%S"); \
+		echo "Un Makefile est présent. Création d'un point de restauration (.Makefile.$${MOD_DATE})"; \
 		mv Makefile .Makefile.$${MOD_DATE}; \
 	fi
 	@curl -o Makefile $(MAKEFILE_SELF_REPO)
-	@echo "Mise à jour terminée."
-
+	if [ $$? -ne 0 ]; then \
+		echo "Le téléchargement du nouveau Makefile a échoué. Restauration de l'ancien Makefile..."; \
+		mv Makefile.$${MOD_DATE} Makefile; \
+	else \
+		echo "Mise à jour terminée."; \
+	fi
 sesame-update: ## Update the Sesame server
 	@docker compose pull
 	@docker compose up -d
