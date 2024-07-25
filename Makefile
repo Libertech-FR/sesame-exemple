@@ -1,3 +1,10 @@
+TMP_DIR := /tmp
+DAEMON_PLATFORM := amd64
+DAEMON_PKG_NAME := sesame-daemon_%s_$(DAEMON_PLATFORM).deb
+DAEMON_REPO := libertech-fr/sesame-daemon
+DAEMON_GITHUB_API := https://api.github.com/repos/$(DAEMON_REPO)/tags
+DAEMON_DOWNLOAD_URL := https://github.com/$(DAEMON_REPO)/releases/download/%s/%s
+
 .DEFAULT_GOAL := help
 help:
 	@printf "\033[33mUsage:\033[0m\n  make [target] [arg=\"val\"...]\n\n\033[33mTargets:\033[0m\n"
@@ -13,6 +20,20 @@ sesame-stop: ## Stop the Sesame server
 sesame-update: ## Update the Sesame server
 	@docker compose pull
 	@docker compose up -d
+
+sesame-update-daemon: ## Update the Sesame Daemon (pkg)
+	@echo "Téléchargement du package pour le tag le plus récent"
+	@LATEST_TAG=$$(curl -s $(DAEMON_GITHUB_API) | jq -r '.[0].name' | sed 's/^v//'); \
+		FINAL_DAEMON_PKG_NAME=$$(printf "$(DAEMON_PKG_NAME)" $$LATEST_TAG); \
+		DOWNLOAD_URL=$$(printf "$(DAEMON_DOWNLOAD_URL)" $$LATEST_TAG $$FINAL_DAEMON_PKG_NAME); \
+		echo "Téléchargement du package <$$FINAL_DAEMON_PKG_NAME> depuis <$$DOWNLOAD_URL>"; \
+		curl -s -L -o $(TMP_DIR)/$$FINAL_DAEMON_PKG_NAME $$DOWNLOAD_URL; \
+		dpkg -i $(TMP_DIR)/$$FINAL_DAEMON_PKG_NAME
+
+sesame-daemon-get-latest: ## Update the Sesame Daemon (pkg)
+	@echo "Récupération du tag le plus récent du dépôt $(DAEMON_REPO) via l'API GitHub"
+	@LATEST_TAG=$$(curl -s $(DAEMON_GITHUB_API) | jq -r '.[0].name' | sed 's/^v//'); \
+		echo "Le tag le plus récent est: $$LATEST_TAG"
 
 sesame-import-taiga: ## Import Taiga data
 	@$(eval an ?= '0')
