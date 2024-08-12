@@ -13,4 +13,3 @@ services:
 networks:
   sesame:
     external: true
-  

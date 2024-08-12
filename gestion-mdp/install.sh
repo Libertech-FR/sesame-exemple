@@ -37,7 +37,8 @@ if [ ! -d "./config/img" ];then
   curl -L "https://raw.githubusercontent.com/Libertech-FR/sesame-gestion-mdp/main/src/public/img/background.png" --output config/img/background.png
   curl -L "https://raw.githubusercontent.com/Libertech-FR/sesame-gestion-mdp/main/src/public/img/logo.png" --output config/img/logo.png
   curl -L "https://raw.githubusercontent.com/Libertech-FR/sesame-gestion-mdp/main/src/public/favicon.ico" --output config/favicon.ico
-end if
-echo "L'installation est terminée vous pouvez lancer le service #docker compose up -d"
+fi
+echo ""
+echo "L'installation est terminée. Vous pouvez lancer le service #docker compose up -d"
 
 
