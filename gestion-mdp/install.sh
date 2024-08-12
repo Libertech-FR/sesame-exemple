@@ -32,6 +32,12 @@ read -p "Recopier ici le jeton généré par la commande ci-dessus :" JETON
 echo "Géneration de .env"
 echo "API_URL=$HOST" >.env
 echo "API_KEY=$JETON" >>.env
+if [ ! -d "./config/img" ];then
+  mkdir -p config/img
+  curl -L "https://raw.githubusercontent.com/Libertech-FR/sesame-gestion-mdp/main/src/public/img/background.png" --output config/img/background.png
+  curl -L "https://raw.githubusercontent.com/Libertech-FR/sesame-gestion-mdp/main/src/public/img/logo.png" --output config/img/logo.png
+  curl -L "https://raw.githubusercontent.com/Libertech-FR/sesame-gestion-mdp/main/src/public/favicon.ico" --output config/favicon.ico
+end if
 echo "L'installation est terminée vous pouvez lancer le service #docker compose up -d"
 
 
