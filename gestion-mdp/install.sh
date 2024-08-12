@@ -12,7 +12,7 @@ fi
 type docker 2>/dev/null >/dev/null
 OK=$?
 if [ $OK = 1 ];then
-	echo "Docker n'est pas installé, installez la"
+	echo "Docker n'est pas installé, installez le"
         exit 1
 else
 	echo "Commande docker OK"
@@ -38,4 +38,5 @@ read -p "Recopier ici le jeton généré par la commande ci-dessus :" JETON
 echo "API_URL=$HOST" >.env
 echo "API_KEY="$JETON"
 echo "L'installation est terminée vous pouvez lancer le service #docker compose up -d"
+
 
