@@ -19,7 +19,6 @@ else
 fi
 WD=`pwd`
 read -p "Répertoire d'installation ($PWD) :" mypwd
-read -p "Url du serveur (http(s)://(nom|ip):" HOST
 echo $mypwd
 if [ "$mypwd" = "" ];then
 	mypwd=$PWD
