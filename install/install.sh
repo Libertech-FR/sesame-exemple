@@ -12,7 +12,7 @@ fi
 type docker 2>/dev/null >/dev/null
 OK=$?
 if [ $OK = 1 ];then
-	echo "la commande make n'est pas installée, installez la"
+	echo "Docker n'est pas installé, installez la"
         exit 1
 else
 	echo "Commande docker OK"
