@@ -1,14 +1,6 @@
 #!/bin/bash
 #set -x
 #Verification si docker est installé
-# test si le cpu supporte avx
-cat /proc/cpuinfo|grep -i avx >/dev/null 2>/dev/null
-OK=$?
-if [ $OK = 1 ];then
-  echo "le CPU doit avoir la fonctionnalité AVX"
-  echo "Installaion impossible"
-  exit 1
-fi
 type docker 2>/dev/null >/dev/null
 OK=$?
 if [ $OK = 1 ];then

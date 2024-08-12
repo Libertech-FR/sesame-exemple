@@ -1,11 +1,11 @@
 services:
-  sesame-app-manager:
+  sesame-gestion-mdp:
     container_name: sesame-gestion-mdp
     image: ghcr.io/libertech-fr/sesame-gestion-mdp:latest
     restart: always
     ports: 
       - 3002:3000
-    network:
+    networks:
       - sesame 
 
 networks:
