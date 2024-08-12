@@ -29,14 +29,17 @@ if [ ! -d "$mypwd" ];then
 	echo "Vous devez creer le repertoire $mypwd"
 	exit 1;
 fi
+echo "Téléchargement de docker-compose"
 curl -L 'https://raw.githubusercontent.com/Libertech-FR/sesame-exemple/main/gestion-mdp/docker-compose.yml' >docker-compose.yml
 read -p "Url du serveur sesame-orchestrator (http(s)://(nom|ip):" HOST
 # creation du reseau sesame
+echo "Création du réseau docker sesame"
 docker network create sesame
 echo "Veuillez créer un jeton d'authentification sur sesame-orchestrator avec le commande : #make sesame-generate-jwt-secret"
 read -p "Recopier ici le jeton généré par la commande ci-dessus :" JETON
+echo "Géneration de .env"
 echo "API_URL=$HOST" >.env
-echo "API_KEY="$JETON"
+echo "API_KEY=$JETON" >>.env
 echo "L'installation est terminée vous pouvez lancer le service #docker compose up -d"
 
 
