@@ -38,6 +38,7 @@ fi
 PWD=`pwd`
 read -p "Répertoire d'installation ($PWD) :" mypwd   
 read -p "Url du serveur (http(s)://(nom|ip):" HOST
+read -p "Url du portail de gestion de mot de passe (http(s)://(nom|ip):" PORTAIL
 echo $mypwd
 if [ "$mypwd" = "" ];then 
 	mypwd=$PWD
@@ -56,7 +57,13 @@ find .|cpio -pdvum $mypwd
 cd $mypwd
 #copy docker-compose.yml 
 if [ ! -f "docker-compose.yml" ];then
-	cp docker-compose.yml.example docker-compose.yml
+  curl -L "https://raw.githubusercontent.com/Libertech-FR/sesame-exemple/main/docker-compose.yml.example" --output docker-compose.yml
+fi
+#copie des modeles de mail
+if [ ! -d "./configs/sesame-orchestrator/mail-templates"].then
+  mkdir -p ./configs/sesame-orchestrator/mail-templates
+  curl -L 'https://raw.githubusercontent.com/Libertech-FR/sesame-orchestrator/main/templates/initaccount.hbs' --output ./configs/sesame-orchestrator/mail-templates/initaccount.hbs
+  curl -L "https://raw.githubusercontent.com/Libertech-FR/sesame-orchestrator/main/templates/resetaccount.hbs" --output ./configs/sesame-orchestrator/mail-templates/resetaccount.hbs
 fi
 #creation des networks
 docker network create sesame
@@ -68,6 +75,7 @@ KEY=`make sesame-generate-jwt-secret`
 echo JWT_SECRET=\'$KEY\' >.env
 echo HOST=$HOST >>.env
 echo TLS=false >>.env
+echo SESAME_FRONT_MDP=$PORTAIL >>.env
 echo "Demarrage services"
 docker compose pull
 docker compose up -d
