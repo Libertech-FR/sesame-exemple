@@ -57,6 +57,7 @@ sesame-daemon-get-latest: ## Update the Sesame Daemon (pkg)
 
 sesame-import-taiga: ## Import Taiga data
 	@$(eval an ?= '0')
+	@$(eval imports ?= 'all')
 	@docker pull ghcr.io/libertech-fr/sesame-taiga_crawler:latest
 	@docker run --rm -it \
 		-v $(CURDIR)/configs/sesame-taiga-crawler/config.yml:/data/config.yml \
@@ -64,9 +65,10 @@ sesame-import-taiga: ## Import Taiga data
                 -v $(CURDIR)/configs/sesame-taiga-crawler/cache:/data/cache \
 		-v $(CURDIR)/configs/sesame-taiga-crawler/.env:/data/.env \
 		--network sesame \
-		ghcr.io/libertech-fr/sesame-taiga_crawler:latest python /data/main.py --an=$(an)
+		ghcr.io/libertech-fr/sesame-taiga_crawler:latest python /data/main.py --an=$(an) --imports=$(imports)
 
 sesame-import-taiga-taiga: ## Import only Taiga data without pushing them in Sesame
+	@$(eval imports ?= 'all')
 	@docker pull ghcr.io/libertech-fr/sesame-taiga_crawler:latest
 	@docker run --rm -it \
 		-v $(CURDIR)/configs/sesame-taiga-crawler/config.yml:/data/config.yml \
@@ -75,9 +77,10 @@ sesame-import-taiga-taiga: ## Import only Taiga data without pushing them in Ses
 		-v $(CURDIR)/configs/sesame-taiga-crawler/.env:/data/.env \
 		--network sesame \
 		ghcr.io/libertech-fr/sesame-taiga_crawler:latest \
-	        python /data/main.py --run=taiga
+	        python /data/main.py --run=taiga --imports=$(imports)
 
 sesame-import-taiga-sesame: ## pushing them in Sesame
+	@$(eval imports ?= 'all')
 	@docker pull ghcr.io/libertech-fr/sesame-taiga_crawler:latest
 	@docker run --rm -it \
 		-v $(CURDIR)/configs/sesame-taiga-crawler/config.yml:/data/config.yml \
@@ -86,7 +89,7 @@ sesame-import-taiga-sesame: ## pushing them in Sesame
 		-v $(CURDIR)/configs/sesame-taiga-crawler/.env:/data/.env \
 		--network sesame \
 		ghcr.io/libertech-fr/sesame-taiga_crawler:latest \
-	        python /data/main.py --run=sesame
+	        python /data/main.py --run=sesame --imports=$(imports)
 
 sesame-import: ## Import data
 	@docker pull ghcr.io/libertech-fr/sesame-crawler:latest
