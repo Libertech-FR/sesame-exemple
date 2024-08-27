@@ -1,0 +1,54 @@
+type: Group
+label: Identité
+elements:
+- type: HorizontalLayout
+  elements:
+  - type: Control
+    label: UID
+    scope: "#/properties/uid"
+    options:
+      required: true
+  - type: Control
+    label: Nom
+    scope: "#/properties/sn"
+    options:
+      required: true
+  - type: Control
+    label: Prénom
+    scope: "#/properties/givenName"
+    options:
+      required: true
+- type: HorizontalLayout
+  elements:
+  - type: Control
+    label: Adresse postale
+    scope: "#/properties/postalAddress"
+- type: HorizontalLayout
+  elements:
+  - type: Control
+    label: Email
+    scope: "#/properties/mail"
+    options:
+      format: email
+  - type: Control
+    label: Mobile
+    scope: "#/properties/mobile"
+  - type: Control
+    label: Téléphone
+    scope: "#/properties/telephoneNumber"
+- type: HorizontalLayout
+  elements:
+    - type: Control
+      label: Titre
+      scope: "#/properties/title"
+      options:
+        format: email
+    - type: Control
+      label: Type de population
+      scope: "#/properties/departmentNumber"
+      options:
+        required: true
+        suggestion:
+          - etd
+          - esn
+          - adm
