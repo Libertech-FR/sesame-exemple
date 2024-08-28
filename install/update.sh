@@ -9,9 +9,10 @@ curl -L https://api.github.com/repos/Libertech-FR/sesame-exemple/tarball/main | 
 cd Libertech-FR-sesame*
 cp Makefile $MYPWD
 cp utils/* $MYPWD/utils
-cp install/* $MYPWD/install 
+cp install/* $MYPWD/install
 mkdir import  2>/dev/null
 mkdir import/cache 2>/dev/null 
 mkdir import/data 2>/dev/null
 chown 10001 import/data
 chown 10001 import/cache
+
