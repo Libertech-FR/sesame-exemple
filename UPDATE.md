@@ -9,3 +9,7 @@ customFields.photo: "photo_nom"
 ```
 dans la section mapping
 
+# Dans configs/sesame-app-manager/config
+recopier menu.yml identities-columns.yml
+
+
