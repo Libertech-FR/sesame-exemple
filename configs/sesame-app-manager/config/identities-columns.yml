@@ -20,14 +20,18 @@ entries:
     field:
       type: function
       value: row.additionalFields?.attributes?.supannPerson?.supannTypeEntiteAffectation
+    format:
+      type: function
+      value: "Array.isArray(value) ? value?.join(', ') : value"
     align: left
     sortable: true
 
-  - name: inetOrgPerson.cn
+
+  - name: inetOrgPerson.sn
     label: Nom
     field:
       type: function
-      value: row?.inetOrgPerson?.cn
+      value: row?.inetOrgPerson?.sn
     align: left
     sortable: true
 
