@@ -39,6 +39,7 @@ services:
       - ./configs/sesame-orchestrator/jsonforms:/data/configs/identities/jsonforms
       - ./configs/sesame-orchestrator/validations:/data/configs/identities/validations
       - ./configs/sesame-orchestrator/storage:/data/storage
+      - ./configs/sesame-orchestrator/mail-templates:/data/templates
     ports:
       - "4000:4000"
     networks:
