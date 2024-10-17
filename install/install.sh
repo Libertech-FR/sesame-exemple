@@ -25,7 +25,17 @@ if [ $OK = 1 ];then
         exit 1
 else
         echo "command make OK"
-fi 
+fi 	
+# verification commande jq
+type jq 2>/dev/null >/dev/null
+OK=$?
+if [ $OK = 1 ];then
+        echo "la commande jq n'est pas installée, installez la"
+        exit 1
+else
+        echo "command jq OK"
+fi
+
 #Verification si curl est installé
 type curl 2>/dev/null >/dev/null
 OK=$?
