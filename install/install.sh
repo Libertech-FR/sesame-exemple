@@ -46,8 +46,7 @@ else
         echo "command curl OK"
 fi 
 PWD=`pwd`
-read -p "Répertoire d'installation ($PWD) :" mypwd   
-read -p "Url du serveur (http(s)://(nom|ip):" HOST
+read -p "Répertoire d'installation ($PWD) :" mypwd
 read -p "Url du portail de gestion de mot de passe (http(s)://(nom|ip):" PORTAIL
 echo $mypwd
 if [ "$mypwd" = "" ];then 
@@ -83,8 +82,8 @@ docker pull mihaigalos/randompass
 KEY=`make sesame-generate-jwt-secret`
 # Generation .env 
 echo JWT_SECRET=\'$KEY\' >.env
-echo HOST=$HOST >>.env
-echo TLS=false >>.env
+echo HOST=http://sesame-orchestrator >>.env
+echo SESAME_HTTPS_ENABLED=false >>.env
 echo SESAME_FRONT_MDP=$PORTAIL >>.env
 echo "Demarrage services"
 docker compose pull
