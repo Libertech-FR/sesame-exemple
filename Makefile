@@ -59,13 +59,14 @@ sesame-daemon-get-latest: ## Update the Sesame Daemon (pkg)
 sesame-import-taiga: ## Import Taiga data
 	@$(eval an ?= '0')
 	@$(eval imports ?= 'all')
+	@$(eval force ?= '0')
 	@docker run --rm -it \
 		-v $(CURDIR)/configs/sesame-taiga-crawler/config.yml:/data/config.yml \
 		-v $(CURDIR)/configs/sesame-taiga-crawler/data:/data/data \
                 -v $(CURDIR)/configs/sesame-taiga-crawler/cache:/data/cache \
 		-v $(CURDIR)/configs/sesame-taiga-crawler/.env:/data/.env \
 		--network sesame \
-		ghcr.io/libertech-fr/sesame-taiga_crawler:latest python /data/main.py --an=$(an) --imports=$(imports)
+		ghcr.io/libertech-fr/sesame-taiga_crawler:latest python /data/main.py --an=$(an) --imports=$(imports) --force=$(force)
 
 sesame-import-taiga-taiga: ## Import only Taiga data without pushing them in Sesame
 	@$(eval imports ?= 'all')
