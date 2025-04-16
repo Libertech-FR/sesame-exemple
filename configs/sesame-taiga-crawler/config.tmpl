@@ -39,7 +39,7 @@ taiga_etd.json:
     additionalFields.attributes.supannPerson.supannTypeEntiteAffectation:
     - "etd"
     $setOnInsert.additionalFields.attributes.supannPerson.supannEntiteAffectationPrincipale: "etd"
-    state: -1
+    state: 1
     inetOrgPerson.employeeType: "TAIGA"
     $setOnInsert.inetOrgPerson.departmentNumber:
     - "etd"
@@ -107,7 +107,7 @@ taiga_adm.json:
     inetOrgPerson.employeeType: "TAIGA"
     $setOnInsert.inetOrgPerson.departmentNumber:
     - "adm"
-    state: -1
+    state: 1
   transforms:
     inetOrgPerson.cn: "join(delimiter=' ')"
     inetOrgPerson.displayName: "join(delimiter=' ')"
@@ -171,7 +171,7 @@ taiga_esn.json:
     inetOrgPerson.departmentNumber:
     - "esn"
     inetOrgPerson.employeeType: "TAIGA"
-    state: -1
+    state: 1
   transforms:
     inetOrgPerson.cn: "join(delimiter=' ')"
     inetOrgPerson.displayName: "join(delimiter=' ')"
