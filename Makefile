@@ -60,7 +60,7 @@ sesame-import-taiga: ## Import Taiga data
 	@$(eval an ?= '0')
 	@$(eval imports ?= 'all')
 	@$(eval force ?= '0')
-	@docker run --rm -it \
+	@docker run --rm  \
 		-v $(CURDIR)/configs/sesame-taiga-crawler/config.yml:/data/config.yml \
 		-v $(CURDIR)/configs/sesame-taiga-crawler/data:/data/data \
                 -v $(CURDIR)/configs/sesame-taiga-crawler/cache:/data/cache \
@@ -71,7 +71,7 @@ sesame-import-taiga: ## Import Taiga data
 sesame-import-taiga-taiga: ## Import only Taiga data without pushing them in Sesame
 	@$(eval imports ?= 'all')
 	@$(eval force ?= '0')
-	@docker run --rm -it \
+	@docker run --rm  \
 		-v $(CURDIR)/configs/sesame-taiga-crawler/config.yml:/data/config.yml \
 		-v $(CURDIR)/configs/sesame-taiga-crawler/data:/data/data \
                 -v $(CURDIR)/configs/sesame-taiga-crawler/cache:/data/cache \
@@ -83,7 +83,7 @@ sesame-import-taiga-taiga: ## Import only Taiga data without pushing them in Ses
 sesame-import-taiga-sesame: ## pushing them in Sesame
 	@$(eval imports ?= 'all')
 	@$(eval force ?= '0')
-	@docker run --rm -it \
+	@docker run --rm  \
 		-v $(CURDIR)/configs/sesame-taiga-crawler/config.yml:/data/config.yml \
 		-v $(CURDIR)/configs/sesame-taiga-crawler/data:/data/data \
                 -v $(CURDIR)/configs/sesame-taiga-crawler/cache:/data/cache \
@@ -93,7 +93,7 @@ sesame-import-taiga-sesame: ## pushing them in Sesame
 	        python /data/main.py --run=sesame --imports=$(imports) --force=$(force)
 
 sesame-import: ## Import data
-	@docker run --rm -it \
+	@docker run --rm  \
 		-v $(CURDIR)/import/config.yml:/data/config.yml \
 		-v $(CURDIR)/import/data:/data/data \
 		-v $(CURDIR)/import/cache:/data/cache \
@@ -113,10 +113,10 @@ sesame-create-keyring: ## Create new keyring token for Sesame ochestrator API
 		yarn console keyrings create
 
 sesame-backends-syncall: ## Sync all identities from TO_SYNC status
-	@docker exec -it sesame-orchestrator \
+	@docker exec  sesame-orchestrator \
 		yarn console backends syncall
 
 sesame-dump: ## Dump database
 	@[ -d $(CURDIR)/dump ] || mkdir -p $(CURDIR)/dump
 	@chown 999 ${CURDIR}/dump
-	@docker run --rm -it -v ./dump:/data/dump --user=0 --network sesame mongo:7.0 mongodump --host=sesame-mongo --out=/data/dump
+	@docker run --rm  -v ./dump:/data/dump --user=0 --network sesame mongo:7.0 mongodump --host=sesame-mongo --out=/data/dump
