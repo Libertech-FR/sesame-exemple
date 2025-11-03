@@ -24,6 +24,8 @@ sesame-stop: ## Stop the Sesame server
 
 sesame-self-update: ## Self update Sesame Makefile
 	@echo "Mise à jour du fichier Makefile..."
+	@echo "Nettoyage des anciennes sauvegardes (conservation des 3 plus récentes)..."
+	@ls -t .Makefile.* 2>/dev/null | tail -n +4 | xargs -r rm -f
 	@if [ -f Makefile ]; then \
 		MOD_DATE=$$(date -r Makefile "+%Y-%m-%d_%H-%M-%S"); \
 		echo "Un Makefile est présent. Création d'un point de restauration (.Makefile.$${MOD_DATE})"; \
@@ -32,7 +34,7 @@ sesame-self-update: ## Self update Sesame Makefile
 	@curl -s -H "Cache-Control: no-cache" -o Makefile $(MAKEFILE_SELF_REPO)
 	@if [ $$? -ne 0 ]; then \
 		echo "Le téléchargement du nouveau Makefile a échoué. Restauration de l'ancien Makefile..."; \
-		mv Makefile.$${MOD_DATE} Makefile; \
+		mv .Makefile.$${MOD_DATE} Makefile; \
 	else \
 		echo "Mise à jour terminée."; \
 	fi
