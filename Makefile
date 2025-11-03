@@ -13,6 +13,7 @@ DAEMON_DOWNLOAD_URL := https://github.com/$(DAEMON_REPO)/releases/download/%s/%s
 .DEFAULT_GOAL := help
 
 check-daily-update:
+	@echo "Vérification de la nécessité d'une mise à jour quotidienne du Makefile..."
 	@LAST_BACKUP=$$(ls -t .Makefile.* 2>/dev/null | head -n 1); \
 	if [ -z "$$LAST_BACKUP" ]; then \
 		$(MAKE) sesame-self-update; \
