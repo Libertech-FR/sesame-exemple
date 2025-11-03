@@ -39,7 +39,7 @@ sesame-stop: ## Stop the Sesame server
 sesame-self-update: ## Self update Sesame Makefile
 	@echo "Mise à jour du fichier Makefile..."
 	@echo "Nettoyage des anciennes sauvegardes (conservation des 3 plus récentes)..."
-	@ls -t .Makefile.* 2>/dev/null | tail -n +4 | xargs -r rm -f
+	@ls -t .Makefile.* 2> /dev/null | tail -n +3 | xargs -r rm -f
 	@if [ -f Makefile ]; then \
 		MOD_DATE=$$(date -r Makefile "+%Y-%m-%d_%H-%M-%S"); \
 		echo "Un Makefile est présent. Création d'un point de restauration (.Makefile.$${MOD_DATE})"; \
