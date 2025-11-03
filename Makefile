@@ -1,5 +1,5 @@
 #!/usr/bin/make -f
-# Version: 2024-07-25_12-14
+# Version: 2025-11-03_12-00
 
 TMP_DIR := /tmp
 MAKEFILE_SELF_BRANCH := main
@@ -11,6 +11,19 @@ DAEMON_GITHUB_API := https://api.github.com/repos/$(DAEMON_REPO)/tags
 DAEMON_DOWNLOAD_URL := https://github.com/$(DAEMON_REPO)/releases/download/%s/%s
 
 .DEFAULT_GOAL := help
+
+check-daily-update:
+	@LAST_BACKUP=$$(ls -t .Makefile.* 2>/dev/null | head -n 1); \
+	if [ -z "$$LAST_BACKUP" ]; then \
+		$(MAKE) sesame-self-update; \
+	else \
+		LAST_DATE=$$(echo $$LAST_BACKUP | sed 's/\.Makefile\.\([0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\}\).*/\1/'); \
+		TODAY=$$(date +%Y-%m-%d); \
+		if [ "$$LAST_DATE" != "$$TODAY" ]; then \
+			$(MAKE) sesame-self-update; \
+		fi; \
+	fi
+
 help:
 	@printf "\033[33mUsage:\033[0m\n  make [target] [arg=\"val\"...]\n\n\033[33mTargets:\033[0m\n"
 	@grep -E '^[-a-zA-Z0-9_\.\/]+:.*?## .*$$' $(MAKEFILE_LIST) \
@@ -25,7 +38,7 @@ sesame-stop: ## Stop the Sesame server
 sesame-self-update: ## Self update Sesame Makefile
 	@echo "Mise à jour du fichier Makefile..."
 	@echo "Nettoyage des anciennes sauvegardes (conservation des 3 plus récentes)..."
-	@ls -t .Makefile.* 2> /dev/null | tail -n +3 | xargs -r rm -f
+	@ls -t .Makefile.* 2>/dev/null | tail -n +4 | xargs -r rm -f
 	@if [ -f Makefile ]; then \
 		MOD_DATE=$$(date -r Makefile "+%Y-%m-%d_%H-%M-%S"); \
 		echo "Un Makefile est présent. Création d'un point de restauration (.Makefile.$${MOD_DATE})"; \
@@ -39,12 +52,12 @@ sesame-self-update: ## Self update Sesame Makefile
 		echo "Mise à jour terminée."; \
 	fi
 
-sesame-update: ## Update the Sesame server
+sesame-update: check-daily-update ## Update the Sesame server
 	@docker pull ghcr.io/libertech-fr/sesame-taiga_crawler:latest
 	@docker compose pull
 	@docker compose up -d
 
-sesame-update-daemon: ## Update the Sesame Daemon (pkg)
+sesame-update-daemon: check-daily-update ## Update the Sesame Daemon (pkg)
 	@echo "Téléchargement du package pour le tag le plus récent"
 	@LATEST_TAG=$$(curl -s $(DAEMON_GITHUB_API) | jq -r '.[0].name' | sed 's/^v//'); \
 		FINAL_DAEMON_PKG_NAME=$$(printf "$(DAEMON_PKG_NAME)" $$LATEST_TAG); \
