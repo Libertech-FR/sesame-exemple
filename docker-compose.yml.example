@@ -1,27 +1,6 @@
 name: "sesame"
 
 services:
-  sesame-app-manager:
-    container_name: sesame-app-manager
-    image: ghcr.io/libertech-fr/sesame-app-manager:latest
-    restart: always
-    depends_on:
-      - sesame-orchestrator
-    environment:
-      - SESAME_APP_API_URL=${HOST}:4000
-      - SESAME_HTTPS_PATH_KEY=/data/certificates/server.key
-      - SESAME_HTTPS_PATH_CERT=/data/certificates/server.crt
-      - SESAME_HTTPS_ENABLED=${SESAME_HTTPS_ENABLED:-false}
-    volumes:
-      - ./configs/sesame-app-manager/statics:/data/src/public/config
-      - ./configs/sesame-app-manager/config:/data/config
-      - ./certificates:/data/certificates
-    ports:
-      - "3000:3000"
-    networks:
-      - sesame
-      - reverse
-
   sesame-orchestrator:
     container_name: sesame-orchestrator
     image: ghcr.io/libertech-fr/sesame-orchestrator:latest
@@ -37,12 +16,19 @@ services:
       - SESAME_HTTPS_PATH_KEY=/data/certificates/server.key
       - SESAME_HTTPS_PATH_CERT=/data/certificates/server.crt
       - SESAME_HTTPS_ENABLED=${SESAME_HTTPS_ENABLED:-false}
+      - SESAME_APP_API_URL=${HOST_PREFIX}:4000
 
     volumes:
-      - ./configs/sesame-orchestrator/jsonforms:/data/configs/identities/jsonforms
-      - ./configs/sesame-orchestrator/validations:/data/configs/identities/validations
-      - ./configs/sesame-orchestrator/storage:/data/storage
-      - ./configs/sesame-orchestrator/mail-templates:/data/templates
+      # Volumes pour l'orchestrator (API)
+      - ./configs/sesame-orchestrator/jsonforms:/data/apps/api/configs/identities/jsonforms
+      - ./configs/sesame-orchestrator/validations:/data/apps/api/configs/identities/validations
+      - ./configs/sesame-orchestrator/storage:/data/apps/api/storage
+      - ./configs/sesame-orchestrator/lifecycle:/data/apps/api/configs/lifecycle
+      - ./configs/sesame-orchestrator/templates:/data/apps/api/templates
+      # Volumes pour l'app-manager (WEB)
+      - ./configs/sesame-app-manager/config:/data/apps/web/config
+      - ./configs/sesame-app-manager/statics:/data/apps/web/src/public/config
+      # Certificates
       - ./certificates:/data/certificates
     ports:
       - "4000:4000"
