@@ -82,7 +82,7 @@ docker pull mihaigalos/randompass
 KEY=`make sesame-generate-jwt-secret`
 # Generation .env 
 echo JWT_SECRET=\'$KEY\' >.env
-echo HOST=http://sesame-orchestrator >>.env
+echo HOST_PREFIX=http://sesame-orchestrator >>.env
 echo SESAME_HTTPS_ENABLED=false >>.env
 echo SESAME_FRONT_MDP=$PORTAIL >>.env
 echo "Demarrage services"
