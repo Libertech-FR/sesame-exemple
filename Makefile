@@ -9,6 +9,10 @@ DAEMON_PKG_NAME := sesame-daemon_%s_$(DAEMON_PLATFORM).deb
 DAEMON_REPO := libertech-fr/sesame-daemon
 DAEMON_GITHUB_API := https://api.github.com/repos/$(DAEMON_REPO)/tags
 DAEMON_DOWNLOAD_URL := https://github.com/$(DAEMON_REPO)/releases/download/%s/%s
+BACKEND_LDAP_PKG_NAME := sesame-backend-openldap_%s_$(DAEMON_PLATFORM).deb
+BACKEND_LDAP_REPO := libertech-fr/sesame-backend-ldap
+BACKEND_LDAP_GITHUB_API := https://api.github.com/repos/$(BACKEND_LDAP_REPO)/tags
+BACKEND_LDAP_DOWNLOAD_URL := https://github.com/$(BACKEND_LDAP_REPO)/releases/download/%s/%s
 
 .DEFAULT_GOAL := help
 
@@ -71,6 +75,21 @@ sesame-daemon-get-latest: ## Update the Sesame Daemon (pkg)
 	@echo "Récupération du tag le plus récent du dépôt $(DAEMON_REPO) via l'API GitHub"
 	@LATEST_TAG=$$(curl -s $(DAEMON_GITHUB_API) | jq -r '.[0].name' | sed 's/^v//'); \
 		echo "Le tag le plus récent est: $$LATEST_TAG"
+
+sesame-backend-ldap-get-latest: ## Get the latest tag of the Sesame LDAP backend
+	@echo "Récupération du tag le plus récent du dépôt $(BACKEND_LDAP_REPO) via l'API GitHub"
+	@LATEST_TAG=$$(curl -s $(BACKEND_LDAP_GITHUB_API) | jq -r '.[0].name' | sed 's/^v//'); \
+		echo "Le tag le plus récent est: $$LATEST_TAG"
+
+sesame-update-backend-ldap: ## Update the Sesame LDAP backend (pkg)
+	@echo "Téléchargement du package pour le tag le plus récent"
+	@LATEST_TAG=$$(curl -s $(BACKEND_LDAP_GITHUB_API) | jq -r '.[0].name'); \
+		LATEST_TAG_CLEAN=$$(echo $$LATEST_TAG | sed 's/^v//'); \
+		FINAL_PKG_NAME=$$(printf "$(BACKEND_LDAP_PKG_NAME)" $$LATEST_TAG_CLEAN); \
+		DOWNLOAD_URL=$$(printf "$(BACKEND_LDAP_DOWNLOAD_URL)" $$LATEST_TAG $$FINAL_PKG_NAME); \
+		echo "Téléchargement du package <$$FINAL_PKG_NAME> depuis <$$DOWNLOAD_URL>"; \
+		curl -s -H "Cache-Control: no-cache" -L -o $(TMP_DIR)/$$FINAL_PKG_NAME $$DOWNLOAD_URL; \
+		dpkg -i $(TMP_DIR)/$$FINAL_PKG_NAME
 
 sesame-import-taiga: ## Import Taiga data
 	@$(eval an ?= '0')
