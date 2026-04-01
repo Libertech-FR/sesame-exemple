@@ -37,7 +37,7 @@ check-daily-update:
 
 help:
 	@printf "\033[33mUsage:\033[0m\n  make [target] [arg=\"val\"...]\n\n\033[33mTargets:\033[0m\n"
-	@grep -E '^[-a-zA-Z0-9_\.\/]+:.*?## .*$$' $(MAKEFILE_LIST) \
+	@grep -h -E '^[-a-zA-Z0-9_\.\/]+:.*?## .*$$' $(MAKEFILE_LIST) \
 		| sort | awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[32m%-15s\033[0m %s\n", $$1, $$2}'
 
 sesame-run: ## Run the Sesame server
@@ -111,7 +111,7 @@ sesame-import-taiga: ## Import Taiga data
                 -v $(CURDIR)/configs/sesame-taiga-crawler/cache:/data/cache \
 		-v $(CURDIR)/configs/sesame-taiga-crawler/.env:/data/.env \
 		--network sesame \
-		$(TAIGA_CRAWLER_IMAGE):$(TAIGA_CRAWLER_TAG) python /data/main.py --an=$(an) --imports=$(imports) --force=$(force)
+				$(TAIGA_CRAWLER_IMAGE):$(TAIGA_CRAWLER_TAG) python /data/main.py --an=$(an) --imports=$(imports) --force=$(force)
 
 sesame-import-taiga-taiga: ## Import only Taiga data without pushing them in Sesame
 	@$(eval imports ?= 'all')
@@ -122,7 +122,7 @@ sesame-import-taiga-taiga: ## Import only Taiga data without pushing them in Ses
                 -v $(CURDIR)/configs/sesame-taiga-crawler/cache:/data/cache \
 		-v $(CURDIR)/configs/sesame-taiga-crawler/.env:/data/.env \
 		--network sesame \
-		$(TAIGA_CRAWLER_IMAGE):$(TAIGA_CRAWLER_TAG) \
+				$(TAIGA_CRAWLER_IMAGE):$(TAIGA_CRAWLER_TAG) \
 	        python /data/main.py --run=taiga --imports=$(imports) --force=$(force)
 
 sesame-import-taiga-sesame: ## pushing them in Sesame
@@ -134,7 +134,7 @@ sesame-import-taiga-sesame: ## pushing them in Sesame
                 -v $(CURDIR)/configs/sesame-taiga-crawler/cache:/data/cache \
 		-v $(CURDIR)/configs/sesame-taiga-crawler/.env:/data/.env \
 		--network sesame \
-		$(TAIGA_CRAWLER_IMAGE):$(TAIGA_CRAWLER_TAG) \
+				$(TAIGA_CRAWLER_IMAGE):$(TAIGA_CRAWLER_TAG) \
 	        python /data/main.py --run=sesame --imports=$(imports) --force=$(force)
 
 sesame-import: ## Import data
