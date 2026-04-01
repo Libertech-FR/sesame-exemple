@@ -13,6 +13,12 @@ BACKEND_LDAP_PKG_NAME := sesame-backend-openldap_%s_$(DAEMON_PLATFORM).deb
 BACKEND_LDAP_REPO := libertech-fr/sesame-backend-ldap
 BACKEND_LDAP_GITHUB_API := https://api.github.com/repos/$(BACKEND_LDAP_REPO)/tags
 BACKEND_LDAP_DOWNLOAD_URL := https://github.com/$(BACKEND_LDAP_REPO)/releases/download/%s/%s
+TAIGA_CRAWLER_ENV_FILE := $(CURDIR)/configs/sesame-taiga-crawler/.env
+
+-include $(TAIGA_CRAWLER_ENV_FILE)
+
+TAIGA_CRAWLER_IMAGE ?= ghcr.io/libertech-fr/sesame-taiga_crawler
+TAIGA_CRAWLER_TAG ?= latest
 
 .DEFAULT_GOAL := help
 
@@ -58,8 +64,12 @@ sesame-self-update: ## Self update Sesame Makefile
 	fi
 
 sesame-update: check-daily-update ## Update the Sesame server
-	@docker pull ghcr.io/libertech-fr/sesame-taiga_crawler:latest
+	echo "Mise à jour de l'image du crawler Taiga et redémarrage du serveur Sesame..."
+	echo "Pull de l'image $(TAIGA_CRAWLER_IMAGE):$(TAIGA_CRAWLER_TAG)..."
+	@docker pull $(TAIGA_CRAWLER_IMAGE):$(TAIGA_CRAWLER_TAG)
+	echo "Pull des autres images(compose) du serveur Sesame..."
 	@docker compose pull
+	echo "Redémarrage du serveur Sesame avec les nouvelles images..."
 	@docker compose up -d
 
 sesame-update-daemon: check-daily-update ## Update the Sesame Daemon (pkg)
@@ -101,7 +111,7 @@ sesame-import-taiga: ## Import Taiga data
                 -v $(CURDIR)/configs/sesame-taiga-crawler/cache:/data/cache \
 		-v $(CURDIR)/configs/sesame-taiga-crawler/.env:/data/.env \
 		--network sesame \
-		ghcr.io/libertech-fr/sesame-taiga_crawler:latest python /data/main.py --an=$(an) --imports=$(imports) --force=$(force)
+		$(TAIGA_CRAWLER_IMAGE):$(TAIGA_CRAWLER_TAG) python /data/main.py --an=$(an) --imports=$(imports) --force=$(force)
 
 sesame-import-taiga-taiga: ## Import only Taiga data without pushing them in Sesame
 	@$(eval imports ?= 'all')
@@ -112,7 +122,7 @@ sesame-import-taiga-taiga: ## Import only Taiga data without pushing them in Ses
                 -v $(CURDIR)/configs/sesame-taiga-crawler/cache:/data/cache \
 		-v $(CURDIR)/configs/sesame-taiga-crawler/.env:/data/.env \
 		--network sesame \
-		ghcr.io/libertech-fr/sesame-taiga_crawler:latest \
+		$(TAIGA_CRAWLER_IMAGE):$(TAIGA_CRAWLER_TAG) \
 	        python /data/main.py --run=taiga --imports=$(imports) --force=$(force)
 
 sesame-import-taiga-sesame: ## pushing them in Sesame
@@ -124,7 +134,7 @@ sesame-import-taiga-sesame: ## pushing them in Sesame
                 -v $(CURDIR)/configs/sesame-taiga-crawler/cache:/data/cache \
 		-v $(CURDIR)/configs/sesame-taiga-crawler/.env:/data/.env \
 		--network sesame \
-		ghcr.io/libertech-fr/sesame-taiga_crawler:latest \
+		$(TAIGA_CRAWLER_IMAGE):$(TAIGA_CRAWLER_TAG) \
 	        python /data/main.py --run=sesame --imports=$(imports) --force=$(force)
 
 sesame-import: ## Import data
